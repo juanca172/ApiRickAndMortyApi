@@ -7,15 +7,37 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		832D63A428825231005FD375 /* RMLocationRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832D63A328825231005FD375 /* RMLocationRoute.swift */; };
+		832D63A728829390005FD375 /* TestLocationApiRickAndMorty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832D63A628829390005FD375 /* TestLocationApiRickAndMorty.swift */; };
+		8333EAC5287FAAB900563F18 /* MockNetworkingRM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8333EAC4287FAAB900563F18 /* MockNetworkingRM.swift */; };
 		833F49BB286BDB26002D410A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833F49BA286BDB26002D410A /* AppDelegate.swift */; };
 		833F49BD286BDB26002D410A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833F49BC286BDB26002D410A /* SceneDelegate.swift */; };
 		833F49BF286BDB26002D410A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833F49BE286BDB26002D410A /* ViewController.swift */; };
 		833F49C2286BDB26002D410A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 833F49C0286BDB26002D410A /* Main.storyboard */; };
 		833F49C4286BDB27002D410A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 833F49C3286BDB27002D410A /* Assets.xcassets */; };
 		833F49C7286BDB27002D410A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 833F49C5286BDB27002D410A /* LaunchScreen.storyboard */; };
+		833F49D0286BDB71002D410A /* RMGetData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833F49CF286BDB71002D410A /* RMGetData.swift */; };
+		833F49D2286BDDEA002D410A /* RMCharacterRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833F49D1286BDDEA002D410A /* RMCharacterRoute.swift */; };
+		8398536C286FC8D400692D79 /* ApiRickAndMortyNetworkingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8398536B286FC8D400692D79 /* ApiRickAndMortyNetworkingTests.swift */; };
+		83AE836D287BBC44004B7C31 /* ManageDataResources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE836C287BBC44004B7C31 /* ManageDataResources.swift */; };
+		83DA2C31288893F40073F97E /* RMEpisodeRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DA2C30288893F40073F97E /* RMEpisodeRoute.swift */; };
+		83DA2C332888E0870073F97E /* TestEpisodeRickAndMorty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DA2C322888E0870073F97E /* TestEpisodeRickAndMorty.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		8398536D286FC8D400692D79 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 833F49AF286BDB26002D410A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 833F49B6286BDB26002D410A;
+			remoteInfo = ApiRickAndMortyNetworking;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		832D63A328825231005FD375 /* RMLocationRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMLocationRoute.swift; sourceTree = "<group>"; };
+		832D63A628829390005FD375 /* TestLocationApiRickAndMorty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestLocationApiRickAndMorty.swift; sourceTree = "<group>"; };
+		8333EAC4287FAAB900563F18 /* MockNetworkingRM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNetworkingRM.swift; sourceTree = "<group>"; };
 		833F49B7286BDB26002D410A /* ApiRickAndMortyNetworking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ApiRickAndMortyNetworking.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		833F49BA286BDB26002D410A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		833F49BC286BDB26002D410A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +46,13 @@
 		833F49C3286BDB27002D410A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		833F49C6286BDB27002D410A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		833F49C8286BDB27002D410A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		833F49CF286BDB71002D410A /* RMGetData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMGetData.swift; sourceTree = "<group>"; };
+		833F49D1286BDDEA002D410A /* RMCharacterRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMCharacterRoute.swift; sourceTree = "<group>"; };
+		83985369286FC8D400692D79 /* ApiRickAndMortyNetworkingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ApiRickAndMortyNetworkingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8398536B286FC8D400692D79 /* ApiRickAndMortyNetworkingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiRickAndMortyNetworkingTests.swift; sourceTree = "<group>"; };
+		83AE836C287BBC44004B7C31 /* ManageDataResources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageDataResources.swift; sourceTree = "<group>"; };
+		83DA2C30288893F40073F97E /* RMEpisodeRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMEpisodeRoute.swift; sourceTree = "<group>"; };
+		83DA2C322888E0870073F97E /* TestEpisodeRickAndMorty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestEpisodeRickAndMorty.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -34,13 +63,32 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		83985366286FC8D400692D79 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		832D63A528829353005FD375 /* MockTest */ = {
+			isa = PBXGroup;
+			children = (
+				8333EAC4287FAAB900563F18 /* MockNetworkingRM.swift */,
+			);
+			path = MockTest;
+			sourceTree = "<group>";
+		};
 		833F49AE286BDB26002D410A = {
 			isa = PBXGroup;
 			children = (
+				83AE836B287BBC25004B7C31 /* DataManager */,
+				833F49CE286BDB36002D410A /* NetworkDevelopment */,
 				833F49B9286BDB26002D410A /* ApiRickAndMortyNetworking */,
+				832D63A528829353005FD375 /* MockTest */,
+				8398536A286FC8D400692D79 /* ApiRickAndMortyNetworkingTests */,
 				833F49B8286BDB26002D410A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -49,6 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				833F49B7286BDB26002D410A /* ApiRickAndMortyNetworking.app */,
+				83985369286FC8D400692D79 /* ApiRickAndMortyNetworkingTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -65,6 +114,35 @@
 				833F49C8286BDB27002D410A /* Info.plist */,
 			);
 			path = ApiRickAndMortyNetworking;
+			sourceTree = "<group>";
+		};
+		833F49CE286BDB36002D410A /* NetworkDevelopment */ = {
+			isa = PBXGroup;
+			children = (
+				833F49CF286BDB71002D410A /* RMGetData.swift */,
+				833F49D1286BDDEA002D410A /* RMCharacterRoute.swift */,
+				832D63A328825231005FD375 /* RMLocationRoute.swift */,
+				83DA2C30288893F40073F97E /* RMEpisodeRoute.swift */,
+			);
+			path = NetworkDevelopment;
+			sourceTree = "<group>";
+		};
+		8398536A286FC8D400692D79 /* ApiRickAndMortyNetworkingTests */ = {
+			isa = PBXGroup;
+			children = (
+				8398536B286FC8D400692D79 /* ApiRickAndMortyNetworkingTests.swift */,
+				832D63A628829390005FD375 /* TestLocationApiRickAndMorty.swift */,
+				83DA2C322888E0870073F97E /* TestEpisodeRickAndMorty.swift */,
+			);
+			path = ApiRickAndMortyNetworkingTests;
+			sourceTree = "<group>";
+		};
+		83AE836B287BBC25004B7C31 /* DataManager */ = {
+			isa = PBXGroup;
+			children = (
+				83AE836C287BBC44004B7C31 /* ManageDataResources.swift */,
+			);
+			path = DataManager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -87,6 +165,24 @@
 			productReference = 833F49B7286BDB26002D410A /* ApiRickAndMortyNetworking.app */;
 			productType = "com.apple.product-type.application";
 		};
+		83985368286FC8D400692D79 /* ApiRickAndMortyNetworkingTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8398536F286FC8D400692D79 /* Build configuration list for PBXNativeTarget "ApiRickAndMortyNetworkingTests" */;
+			buildPhases = (
+				83985365286FC8D400692D79 /* Sources */,
+				83985366286FC8D400692D79 /* Frameworks */,
+				83985367286FC8D400692D79 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8398536E286FC8D400692D79 /* PBXTargetDependency */,
+			);
+			name = ApiRickAndMortyNetworkingTests;
+			productName = ApiRickAndMortyNetworkingTests;
+			productReference = 83985369286FC8D400692D79 /* ApiRickAndMortyNetworkingTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -99,6 +195,10 @@
 				TargetAttributes = {
 					833F49B6286BDB26002D410A = {
 						CreatedOnToolsVersion = 13.2;
+					};
+					83985368286FC8D400692D79 = {
+						CreatedOnToolsVersion = 13.2;
+						TestTargetID = 833F49B6286BDB26002D410A;
 					};
 				};
 			};
@@ -116,6 +216,7 @@
 			projectRoot = "";
 			targets = (
 				833F49B6286BDB26002D410A /* ApiRickAndMortyNetworking */,
+				83985368286FC8D400692D79 /* ApiRickAndMortyNetworkingTests */,
 			);
 		};
 /* End PBXProject section */
@@ -131,6 +232,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		83985367286FC8D400692D79 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -139,12 +247,36 @@
 			buildActionMask = 2147483647;
 			files = (
 				833F49BF286BDB26002D410A /* ViewController.swift in Sources */,
+				832D63A428825231005FD375 /* RMLocationRoute.swift in Sources */,
 				833F49BB286BDB26002D410A /* AppDelegate.swift in Sources */,
+				83AE836D287BBC44004B7C31 /* ManageDataResources.swift in Sources */,
 				833F49BD286BDB26002D410A /* SceneDelegate.swift in Sources */,
+				833F49D2286BDDEA002D410A /* RMCharacterRoute.swift in Sources */,
+				83DA2C31288893F40073F97E /* RMEpisodeRoute.swift in Sources */,
+				833F49D0286BDB71002D410A /* RMGetData.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		83985365286FC8D400692D79 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				83DA2C332888E0870073F97E /* TestEpisodeRickAndMorty.swift in Sources */,
+				8333EAC5287FAAB900563F18 /* MockNetworkingRM.swift in Sources */,
+				8398536C286FC8D400692D79 /* ApiRickAndMortyNetworkingTests.swift in Sources */,
+				832D63A728829390005FD375 /* TestLocationApiRickAndMorty.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		8398536E286FC8D400692D79 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 833F49B6286BDB26002D410A /* ApiRickAndMortyNetworking */;
+			targetProxy = 8398536D286FC8D400692D79 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		833F49C0286BDB26002D410A /* Main.storyboard */ = {
@@ -224,6 +356,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Debug;
 		};
@@ -264,6 +397,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -338,6 +472,42 @@
 			};
 			name = Release;
 		};
+		83985370286FC8D400692D79 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7ZT49UKYZM;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = PruebaUIKit.ApiRickAndMortyNetworkingTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ApiRickAndMortyNetworking.app/ApiRickAndMortyNetworking";
+			};
+			name = Debug;
+		};
+		83985371286FC8D400692D79 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7ZT49UKYZM;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = PruebaUIKit.ApiRickAndMortyNetworkingTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ApiRickAndMortyNetworking.app/ApiRickAndMortyNetworking";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -355,6 +525,15 @@
 			buildConfigurations = (
 				833F49CC286BDB27002D410A /* Debug */,
 				833F49CD286BDB27002D410A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8398536F286FC8D400692D79 /* Build configuration list for PBXNativeTarget "ApiRickAndMortyNetworkingTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				83985370286FC8D400692D79 /* Debug */,
+				83985371286FC8D400692D79 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
