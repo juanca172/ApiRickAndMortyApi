@@ -29,23 +29,13 @@ extension RMLocationRoute {
             components.path = "/location"
             return components.string ?? ""
         case .getPageIndicated(let page):
-            guard page > 0 else {
-                print("No existe una pagina menor a la primera")
-                components.path = "/location/"
-                let query = URLQueryItem(name: "page", value: "1")
-                components.queryItems = [query]
-                return components.string ?? ""
-            }
+            assert(page > 0, "No existe la pagina la pagina : \(page)")
             components.path = "/location/"
             let query = URLQueryItem(name: "page", value: "\(page)")
             components.queryItems = [query]
             return components.string ?? ""
         case .getASingleLocation(let id):
-            guard id > 0 else {
-                print("No existe ninguna localizacion con esa id")
-                components.path = "/location/1"
-                return components.string ?? ""
-            }
+            assert(id > 0, "No existe la localizacion en el id: \(id)")
             components.path = "/location/\(id)"
             return components.string ?? ""
         case .getMultipleLocations(let ids):
@@ -73,26 +63,26 @@ extension RMLocationRoute {
     }
 }
 
-struct RMNameLocation: RMFilterLocationProtocol {
+struct RMNameLocation {
     let name: String
 }
-extension RMNameLocation {
+extension RMNameLocation : RMFilterLocationProtocol {
     var filterTuple: (String, String) {
         return ("name", name)
     }
 }
-struct RMTypeLocation: RMFilterLocationProtocol {
+struct RMTypeLocation {
     let type: String
 }
-extension RMTypeLocation {
+extension RMTypeLocation : RMFilterLocationProtocol {
     var filterTuple: (String, String) {
         return ("type", type)
     }
 }
-struct RMDimensionLocation: RMFilterLocationProtocol {
+struct RMDimensionLocation {
     let dimension: String
 }
-extension RMDimensionLocation {
+extension RMDimensionLocation : RMFilterLocationProtocol {
     var filterTuple: (String, String) {
         return ("dimension", dimension)
     }

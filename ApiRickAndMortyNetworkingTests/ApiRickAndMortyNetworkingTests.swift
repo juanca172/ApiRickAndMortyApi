@@ -39,7 +39,7 @@ class ApiRickAndMortyNetworkingTests: XCTestCase {
     }
     func testGetPageCharacter() {
         //Given
-        let expectedValue = 19
+        let expectedValue = 1
         let expectedURLString = "https://rickandmortyapi.com/api/character/?page=\(expectedValue)"
         let request = RMCharacterRoute.getPageCharacter(pageNumber: expectedValue)
         //When

@@ -14,14 +14,14 @@ protocol URLCompleteEpisodes {
 protocol RMFilterEpisodesProtocol {
     var filterTupe : (String, String) {get}
 }
-enum RMpisodesRoute: URLCompleteEpisodes {
+enum RMEpisodesRoute: URLCompleteEpisodes {
     static let domain = "https://rickandmortyapi.com/api"
     case getAllEpisodes
     case getASingleEpisode(episodeId: Int)
     case getMultipleEpisodes(episodes: [Int])
     case filterEpisodes(filteraBy: [RMFilterEpisodesProtocol])
 }
-extension RMpisodesRoute {
+extension RMEpisodesRoute {
     var finalURL: String {
         var compound = URLComponents()
         switch self {
@@ -29,11 +29,7 @@ extension RMpisodesRoute {
             compound.path = "/episode"
             return compound.string ?? ""
         case .getASingleEpisode(let episodeId):
-            guard episodeId > 0 else {
-                print("no hay un episodio menor a 1")
-                compound.path = "/episode/1"
-                return compound.string ?? ""
-            }
+            assert(episodeId > 0, "No existe el episodio \(episodeId)")
             compound.path = "/episode/\(episodeId)"
             return compound.string ?? ""
         case .getMultipleEpisodes(let episodes):
@@ -49,7 +45,7 @@ extension RMpisodesRoute {
         }
     }
 }
-extension RMpisodesRoute {
+extension RMEpisodesRoute {
     var urlRequestComplete: URLRequest {
         let urlCompletada = Self.domain + self.finalURL
         let url = URL(string: urlCompletada)!
@@ -57,18 +53,18 @@ extension RMpisodesRoute {
         return urlRequest
     }
 }
-struct RMNameRouteEpisode: RMFilterEpisodesProtocol {
+struct RMNameRouteEpisode {
     var name: String
 }
-extension RMNameRouteEpisode {
+extension RMNameRouteEpisode : RMFilterEpisodesProtocol {
     var filterTupe: (String, String) {
         return ("name", name)
     }
 }
-struct RMEpisodeFilter: RMFilterEpisodesProtocol {
+struct RMEpisodeFilter {
     var episode: String
 }
-extension RMEpisodeFilter {
+extension RMEpisodeFilter : RMFilterEpisodesProtocol {
     var filterTupe: (String, String) {
         return ("episode", episode)
     }

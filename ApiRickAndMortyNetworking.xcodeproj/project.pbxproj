@@ -18,6 +18,7 @@
 		833F49C7286BDB27002D410A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 833F49C5286BDB27002D410A /* LaunchScreen.storyboard */; };
 		833F49D0286BDB71002D410A /* RMGetData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833F49CF286BDB71002D410A /* RMGetData.swift */; };
 		833F49D2286BDDEA002D410A /* RMCharacterRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833F49D1286BDDEA002D410A /* RMCharacterRoute.swift */; };
+		835DFD78288C9BAF003BBFFF /* RMErrorAndDecodableStructures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835DFD77288C9BAF003BBFFF /* RMErrorAndDecodableStructures.swift */; };
 		8398536C286FC8D400692D79 /* ApiRickAndMortyNetworkingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8398536B286FC8D400692D79 /* ApiRickAndMortyNetworkingTests.swift */; };
 		83AE836D287BBC44004B7C31 /* ManageDataResources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE836C287BBC44004B7C31 /* ManageDataResources.swift */; };
 		83DA2C31288893F40073F97E /* RMEpisodeRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DA2C30288893F40073F97E /* RMEpisodeRoute.swift */; };
@@ -48,6 +49,7 @@
 		833F49C8286BDB27002D410A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		833F49CF286BDB71002D410A /* RMGetData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMGetData.swift; sourceTree = "<group>"; };
 		833F49D1286BDDEA002D410A /* RMCharacterRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMCharacterRoute.swift; sourceTree = "<group>"; };
+		835DFD77288C9BAF003BBFFF /* RMErrorAndDecodableStructures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMErrorAndDecodableStructures.swift; sourceTree = "<group>"; };
 		83985369286FC8D400692D79 /* ApiRickAndMortyNetworkingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ApiRickAndMortyNetworkingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8398536B286FC8D400692D79 /* ApiRickAndMortyNetworkingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiRickAndMortyNetworkingTests.swift; sourceTree = "<group>"; };
 		83AE836C287BBC44004B7C31 /* ManageDataResources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageDataResources.swift; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 				833F49D1286BDDEA002D410A /* RMCharacterRoute.swift */,
 				832D63A328825231005FD375 /* RMLocationRoute.swift */,
 				83DA2C30288893F40073F97E /* RMEpisodeRoute.swift */,
+				835DFD77288C9BAF003BBFFF /* RMErrorAndDecodableStructures.swift */,
 			);
 			path = NetworkDevelopment;
 			sourceTree = "<group>";
@@ -246,6 +249,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				835DFD78288C9BAF003BBFFF /* RMErrorAndDecodableStructures.swift in Sources */,
 				833F49BF286BDB26002D410A /* ViewController.swift in Sources */,
 				832D63A428825231005FD375 /* RMLocationRoute.swift in Sources */,
 				833F49BB286BDB26002D410A /* AppDelegate.swift in Sources */,

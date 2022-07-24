@@ -27,12 +27,7 @@ extension RMCharacterRoute {
             components.path = "/character"
             return components.string  ?? ""
         case .getOneCharacter(let value):
-
-            guard value >= 1 else {
-                print ("No existe ningun personaje con esa id")
-                components.path = "/character/1"
-                return components.string ?? ""
-            }
+            assert(value > 0 , "no existe un personaje con esa id: \(value)")
             components.path = "/character/\(value)"
             return components.string ?? ""
             
@@ -45,13 +40,7 @@ extension RMCharacterRoute {
             
         case .getPageCharacter(pageNumber: let page):
             
-            guard page >= 1 else {
-                print ("No existe ninguna pagina antes de la pagina 1")
-                components.path = "/character/"
-                let queryToken = URLQueryItem(name: "page", value: "1")
-                components.queryItems = [queryToken]
-                return components.string ?? ""
-            }
+            assert(page > 0, "La pagina \(page) no existe")
             components.path = "/character/"
             let queryToken = URLQueryItem.init(name: "page", value: "\(page)")
             components.queryItems = [queryToken]
@@ -79,36 +68,36 @@ extension RMCharacterRoute {
 protocol RMFilterCharacterProtocol {
     var value: (String, String) {get}
 }
-struct RMNameCharacter: RMFilterCharacterProtocol {
+struct RMNameCharacter {
     let name: String
 }
-extension RMNameCharacter {
+extension RMNameCharacter : RMFilterCharacterProtocol {
     var value: (String, String) {
         return ("name", name)
     }
 }
 
-struct RMStatusCharacter: RMFilterCharacterProtocol {
+struct RMStatusCharacter {
     let status: TypesOfStatus.RawValue
 }
-extension RMStatusCharacter {
+extension RMStatusCharacter : RMFilterCharacterProtocol{
     var value: (String, String) {
         return ("status", status)
     }
 }
 
-struct RMEspecieCharacter: RMFilterCharacterProtocol {
+struct RMEspecieCharacter {
     let specie: String
 }
-extension RMEspecieCharacter {
+extension RMEspecieCharacter : RMFilterCharacterProtocol {
     var value: (String, String) {
         return ("specie", specie)
     }
 }
-struct RMGeneroCharacter: RMFilterCharacterProtocol {
+struct RMGeneroCharacter {
     let genre: TypesOfGenres.RawValue
 }
-extension RMGeneroCharacter {
+extension RMGeneroCharacter : RMFilterCharacterProtocol {
     var value: (String, String) {
         return ("genre", genre)
     }

@@ -20,7 +20,7 @@ class TestEpisodeRickAndMorty: XCTestCase {
     func testGetAllEpisodes () {
         //Given
         let expectedValue = "episode"
-        let RMEpisode = RMpisodesRoute.getAllEpisodes.urlRequestComplete
+        let RMEpisode = RMEpisodesRoute.getAllEpisodes.urlRequestComplete
         //When
         let expectedURL = "https://rickandmortyapi.com/api/\(expectedValue)"
         //Then
@@ -28,8 +28,8 @@ class TestEpisodeRickAndMorty: XCTestCase {
     }
     func testGetASingleEpisode () {
         //Given
-        let expectedValue = 28
-        let RMEpisode = RMpisodesRoute.getASingleEpisode(episodeId: expectedValue).urlRequestComplete
+        let expectedValue = 0
+        let RMEpisode = RMEpisodesRoute.getASingleEpisode(episodeId: expectedValue).urlRequestComplete
         //When
         let expectedURL = "https://rickandmortyapi.com/api/episode/\(expectedValue)"
         //then
@@ -39,7 +39,7 @@ class TestEpisodeRickAndMorty: XCTestCase {
         //Given
         let nameEpisode = RMNameRouteEpisode(name: "The Ricklantis Mixup")
         let episode = RMEpisodeFilter(episode: "S03E07".lowercased())
-        let filtar = RMpisodesRoute.filterEpisodes(filteraBy: [nameEpisode, episode]).urlRequestComplete
+        let filtar = RMEpisodesRoute.filterEpisodes(filteraBy: [nameEpisode, episode]).urlRequestComplete
         //When
         let expectedURL = "https://rickandmortyapi.com/api/episode/?name=the%20ricklantis%20mixup&episode=s03e07"
         //Then

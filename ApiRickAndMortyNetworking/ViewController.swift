@@ -12,7 +12,16 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        tryEvents()
+        let RMCharacterRequest = RMCharacterRoute.getPageCharacter(pageNumber: 0).URLRequestComplete
+        let linkEpisodes = ApiRickAndMortyGeneric()
+        linkEpisodes.getData(urlRequest: RMCharacterRequest) { (result: Result<DatosCharacter, RMError> )in
+            switch result {
+                case .success(let valor):
+                    print(valor)
+                case .failure(let error):
+                    print(error)
+            }
+        }
     }
 
 
