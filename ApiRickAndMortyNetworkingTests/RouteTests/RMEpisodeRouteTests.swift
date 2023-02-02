@@ -28,7 +28,7 @@ class TestEpisodeRickAndMorty: XCTestCase {
     }
     func testGetASingleEpisode () {
         //Given
-        let expectedValue = 0
+        let expectedValue = 2
         let RMEpisode = RMEpisodesRoute.getASingleEpisode(episodeId: expectedValue).urlRequestComplete
         //When
         let expectedURL = "https://rickandmortyapi.com/api/episode/\(expectedValue)"

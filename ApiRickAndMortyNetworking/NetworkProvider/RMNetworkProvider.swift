@@ -7,25 +7,29 @@
 
 import Foundation
 
-protocol RMGetDataProtocol {
+protocol NetworkProviderProtocol {
     func getData<T: Decodable>(urlRequest: URLRequest,_ datos: @escaping (Result<T, RMError>) -> Void)
 }
-struct ApiRickAndMortyGeneric: RMGetDataProtocol {
+
+struct NetworkProvider: NetworkProviderProtocol {
     var urlSession: URLSession
     var jsonDecoder: JSONDecoder
+    var isPaginting = false
+    
     init (urlSession: URLSession = .shared, jsonDecoder: JSONDecoder = JSONDecoder()) {
         self.urlSession = urlSession
         self.jsonDecoder = jsonDecoder
     }
+    
     func getData<T: Decodable>(urlRequest: URLRequest,_ completion: @escaping (Result<T, RMError>) -> Void) {
         urlSession.dataTask(with: urlRequest) { data, response, error in
-            guard let data = data else {
-                completion(.failure(RMError.datosNotFound))
-                return
-            }
             if let error = error {
                 let resultError = RMError.networkError(error)
                 completion(.failure(resultError))
+                return
+            }
+            guard let data = data else{
+                completion(.failure(RMError.datosNotFound))
                 return
             }
             do {
@@ -34,9 +38,11 @@ struct ApiRickAndMortyGeneric: RMGetDataProtocol {
             } catch {
                 completion(.failure(.imposibleDecodiar))
             }
+            
         
         }.resume()
     }
+    
 }
     
 

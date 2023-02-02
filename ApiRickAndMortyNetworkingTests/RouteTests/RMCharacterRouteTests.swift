@@ -63,9 +63,9 @@ class ApiRickAndMortyNetworkingTests: XCTestCase {
         let status = "alive"
         let genre = "male"
         let expectedURLString = "https://rickandmortyapi.com/api/character/?name=\(expectedValue)&status=\(status)&genre=\(genre)"
-        let statusRM = RMStatusCharacter(status: TypesOfStatus.alive.rawValue)
+        let statusRM = RMStatusCharacter(status: RMCharacterStatus.Alive.rawValue)
         let name = RMNameCharacter(name: "Rick Sanchez")
-        let genreRM = RMGeneroCharacter(genre: TypesOfGenres.male.rawValue)
+        let genreRM = RMGeneroCharacter(genre: RMCharacterGender.Male.rawValue)
         let request = RMCharacterRoute.filterCharacter(filterProtocol: [name, statusRM,genreRM])
         //when
         let urlRequest = request.URLRequestComplete

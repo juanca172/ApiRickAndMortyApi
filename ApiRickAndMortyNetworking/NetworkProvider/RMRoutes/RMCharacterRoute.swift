@@ -17,7 +17,7 @@ enum RMCharacterRoute  : UrlCompleteCharacter {
     case getOneCharacter(id: Int)
     case getMultipleCharacters(ids:[Int])
     case getPageCharacter(pageNumber : Int)
-    case filterCharacter(filterProtocol: [RMFilterCharacterProtocol])
+    case filterCharacter(filterProtocol: [RMCharacterFilterProtocol])
 }
 extension RMCharacterRoute {
     var finalUrl: String {
@@ -33,8 +33,8 @@ extension RMCharacterRoute {
             
         case .getMultipleCharacters(ids: let values):
             
-            var value = values.map({String($0)})
-            var result = value.joined(separator: ",")
+            let value = values.map({String($0)})
+            let result = value.joined(separator: ",")
             components.path = "/character/\(result)"
             return components.string ?? ""
             
@@ -65,22 +65,22 @@ extension RMCharacterRoute {
 
     }
 }
-protocol RMFilterCharacterProtocol {
+protocol RMCharacterFilterProtocol {
     var value: (String, String) {get}
 }
 struct RMNameCharacter {
     let name: String
 }
-extension RMNameCharacter : RMFilterCharacterProtocol {
+extension RMNameCharacter : RMCharacterFilterProtocol {
     var value: (String, String) {
         return ("name", name)
     }
 }
 
 struct RMStatusCharacter {
-    let status: TypesOfStatus.RawValue
+    let status: RMCharacterStatus.RawValue
 }
-extension RMStatusCharacter : RMFilterCharacterProtocol{
+extension RMStatusCharacter : RMCharacterFilterProtocol{
     var value: (String, String) {
         return ("status", status)
     }
@@ -89,28 +89,17 @@ extension RMStatusCharacter : RMFilterCharacterProtocol{
 struct RMEspecieCharacter {
     let specie: String
 }
-extension RMEspecieCharacter : RMFilterCharacterProtocol {
+extension RMEspecieCharacter : RMCharacterFilterProtocol {
     var value: (String, String) {
         return ("specie", specie)
     }
 }
 struct RMGeneroCharacter {
-    let genre: TypesOfGenres.RawValue
+    let genre: RMCharacterGender.RawValue
 }
-extension RMGeneroCharacter : RMFilterCharacterProtocol {
+extension RMGeneroCharacter : RMCharacterFilterProtocol {
     var value: (String, String) {
         return ("genre", genre)
     }
 }
-enum TypesOfStatus: String{
-    case alive
-    case dead
-    case unknown
-}
-enum TypesOfGenres: String {
-    case female
-    case male
-    case genderless
-    case unknown
-}
- 
+

@@ -38,7 +38,7 @@ extension RMEpisodesRoute {
             compound.path = "/episode/\(joining)"
             return compound.string ?? ""
         case .filterEpisodes(let filteraBy):
-            var mapping = filteraBy.map({URLQueryItem(name: $0.filterTupe.0.lowercased() , value: $0.filterTupe.1.lowercased())})
+            let mapping = filteraBy.map({URLQueryItem(name: $0.filterTupe.0.lowercased() , value: $0.filterTupe.1.lowercased())})
             compound.queryItems = mapping
             compound.path = "/episode/"
             return compound.string ?? ""
