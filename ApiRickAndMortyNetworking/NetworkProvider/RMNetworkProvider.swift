@@ -14,7 +14,6 @@ protocol NetworkProviderProtocol {
 struct NetworkProvider: NetworkProviderProtocol {
     var urlSession: URLSession
     var jsonDecoder: JSONDecoder
-    var isPaginting = false
     
     init (urlSession: URLSession = .shared, jsonDecoder: JSONDecoder = JSONDecoder()) {
         self.urlSession = urlSession

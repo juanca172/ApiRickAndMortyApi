@@ -57,12 +57,12 @@ class RMDefaultCharacterDataManagerTests: XCTestCase {
         networkProviderMock.dataToReturn = characterResponseHelperMock
         let expectation = XCTestExpectation(description: "test_RMDefaultCharacterDataManager_Get_All_Character_Success")
         //When
-        dataManager.getAllCharacters { (result: Result<CharacterResponseHelper, Error>) in
+        dataManager.getAllCharacters { (result: Result<[RMCharacter], Error>) in
             switch result {
             case .success(let success):
                 //then
-                XCTAssertEqual(success.results.count, 1)
-                XCTAssertEqual(success.results[0].name, characterMock.name)
+                XCTAssertEqual(success.count, 1)
+                XCTAssertEqual(success[0].name, characterMock.name)
                 expectation.fulfill()
             case .failure(_):
                 break
@@ -97,7 +97,7 @@ class RMDefaultCharacterDataManagerTests: XCTestCase {
         let characterResponseMock = [characterMock1]
         networkProviderMock.dataToReturn = characterResponseMock
         let expectation = XCTestExpectation(description: "test_RMDefaultCharacterDataManager_Get_Multiple_Characters_Success")
-        dataManager.getAGroupOfCharacters(ids: [3,2]) { (result: Result<[RMCharacter], Error>) in
+        dataManager.getAGroupOfCharacters(ids: [12]) { (result: Result<[RMCharacter], Error>) in
             switch result {
             case .success(let success):
                 XCTAssertEqual(success.first?.id, characterMock1.id)

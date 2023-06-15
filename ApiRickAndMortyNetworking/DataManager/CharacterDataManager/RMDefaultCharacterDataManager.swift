@@ -54,10 +54,11 @@ struct RMDefaultCharacterDataManager: RMCharacterDataManagerProtocol {
     
     func filterParams(filters: [RMCharacterFilterProtocol], completion: @escaping (Result<[RMCharacter], Error>) -> Void) {
         let request = RMCharacterRoute.filterCharacter(filterProtocol: filters).URLRequestComplete
-        networkProvider.getData(urlRequest: request) { (result: Result<[RMCharacter], RMError>) in
+        print(request.url?.absoluteString)
+        networkProvider.getData(urlRequest: request) { (result: Result<CharacterResponseHelper, RMError>) in
             switch result {
             case .success(let characters):
-                completion(.success(characters))
+                completion(.success(characters.results))
             case .failure(let error):
                 completion(.failure(error))
             }

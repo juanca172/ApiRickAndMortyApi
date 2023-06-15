@@ -29,7 +29,7 @@ extension RMLocationRoute {
             components.path = "/location"
             return components.string ?? ""
         case .getPageIndicated(let page):
-            assert(page > 0, "No existe la pagina la pagina : \(page)")
+            assert(page > 0, "No existe la pagina : \(page)")
             components.path = "/location/"
             let query = URLQueryItem(name: "page", value: "\(page)")
             components.queryItems = [query]
