@@ -16,19 +16,24 @@ protocol CharacterViewModelProtocol: AnyObject {
     func getCellViewModel(indexPath: IndexPath) -> RMTableViewCellModelProtocol
     func updateData()
     func updateFilterData(search name: String)
-    func detailCharacter() -> [[RMCharacter]]
+    func getId(indexPath: IndexPath) -> Int
     var reloadData: (() -> ())? { get set }
     func vaciarFiltro()
+    func getCharacterForDetail(id: Int)
+    var characterById: (( _ characterUI: RMCharacter) -> ())? {get set}
 }
 
 
-final class CharactersViewModel {
+final class CharactersViewModel: CharacterViewModelProtocol {
     
+    var characterById: ((RMCharacter) -> ())?
+        
     private var characterSections : [[RMCharacter]] = []
     private var filteredData : [[RMCharacter]] = []
     private var page = 1
     private var isPaginating = false
     private let dataManager: RMCharacterDataManagerProtocol
+    private var characterObtained: RMCharacter?
     
     var reloadData: (() -> ())?
     
@@ -38,19 +43,22 @@ final class CharactersViewModel {
     
     func loadData(page: Int) {
         if isPaginating == false {
-            dataManager.getCharactersByPage(pageNumber: page) { [weak self] (result: Result<[RMCharacter], Error>) in
+            let request = RMCharacterRoute.getPageCharacter(pageNumber: page).urlRequestComplete
+            dataManager.getTypeByPage(pageNumber: page, request: request, completion: { [weak self] (result:Result<[RMCharacter], Error>) in
+                guard let weakSelf = self else {
+                    return
+                }
                 switch result {
                 case .success(let page):
-                    self?.isPaginating = true
-                    self?.characterSections.append(page)
-                    self?.reloadData?()
+                    weakSelf.isPaginating = true
+                    weakSelf.characterSections.append(page)
+                    weakSelf.reloadData?()
                 case .failure(let error):
                     print(error)
                 }
-            }
+            })
         }
     }
-    
     
     func filterCharacter(for name: String) {
         filteredData  = []
@@ -71,12 +79,34 @@ final class CharactersViewModel {
             }
     }
     
+    func getOneCharacter(for given: Int) {
+        
+        let identifier = given > 0 ? given : 1
+
+        let request = RMCharacterRoute.getOneCharacter(id: identifier).urlRequestComplete
+        
+        dataManager.getOneCharacterById(id: identifier, request: request) {[weak self] (result: Result<RMCharacter, Error>) in
+            guard let weakSelf = self else {
+                return
+            }
+            switch result {
+            case.success(let character):
+                weakSelf.characterObtained = character
+                weakSelf.characterById?(character)
+                
+                print(character.name)
+            case.failure(let error):
+                print(error)
+            
+            }
+        }
+    }
     
     
 }
 
 //MARK: Conformacion protocolos
-extension CharactersViewModel: CharacterViewModelProtocol {
+extension CharactersViewModel {
     
     func vaciarFiltro() {
         self.filteredData = []
@@ -129,11 +159,16 @@ extension CharactersViewModel: CharacterViewModelProtocol {
         }
     }
     
-    func detailCharacter() -> [[RMCharacter]] {
+    func getId(indexPath: IndexPath) -> Int {
         if filteredData.count != 0 {
-            return filteredData
+            return filteredData[indexPath.section][indexPath.row].id
         } else {
-            return characterSections
+            return characterSections[indexPath.section][indexPath.row].id
         }
+    }
+    
+    func getCharacterForDetail(id: Int) {
+        getOneCharacter(for: id)
+        print("Character")
     }
 }

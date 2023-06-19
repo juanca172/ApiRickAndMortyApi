@@ -37,6 +37,11 @@
 		83DA2C31288893F40073F97E /* RMEpisodeRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DA2C30288893F40073F97E /* RMEpisodeRoute.swift */; };
 		83DA2C332888E0870073F97E /* RMEpisodeRouteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DA2C322888E0870073F97E /* RMEpisodeRouteTests.swift */; };
 		83DAC8842995A59500C4F924 /* RMTableViewCellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DAC8832995A59500C4F924 /* RMTableViewCellProtocol.swift */; };
+		83DB46C82A3EB938009A6FA3 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DB46C72A3EB938009A6FA3 /* TabBarController.swift */; };
+		83DB46CB2A3EE77B009A6FA3 /* RouteProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DB46CA2A3EE77B009A6FA3 /* RouteProtocols.swift */; };
+		83DB46CD2A3EEF32009A6FA3 /* CharactersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83DB46CC2A3EEF32009A6FA3 /* CharactersViewController.xib */; };
+		83DB46CF2A3EEF8A009A6FA3 /* DetailCharacterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83DB46CE2A3EEF8A009A6FA3 /* DetailCharacterViewController.xib */; };
+		83DB46D12A3EEFC9009A6FA3 /* LocationsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83DB46D02A3EEFC9009A6FA3 /* LocationsViewController.xib */; };
 		83DBBC8229F08192009ECD90 /* CharacterViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DBBC8129F08192009ECD90 /* CharacterViewCellViewModel.swift */; };
 		83DBBC8529F08AA2009ECD90 /* CharacterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DBBC8329F08AA2009ECD90 /* CharacterCell.swift */; };
 		83DBBC8629F08AA2009ECD90 /* CharacterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83DBBC8429F08AA2009ECD90 /* CharacterCell.xib */; };
@@ -93,6 +98,11 @@
 		83DA2C30288893F40073F97E /* RMEpisodeRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMEpisodeRoute.swift; sourceTree = "<group>"; };
 		83DA2C322888E0870073F97E /* RMEpisodeRouteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMEpisodeRouteTests.swift; sourceTree = "<group>"; };
 		83DAC8832995A59500C4F924 /* RMTableViewCellProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMTableViewCellProtocol.swift; sourceTree = "<group>"; };
+		83DB46C72A3EB938009A6FA3 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		83DB46CA2A3EE77B009A6FA3 /* RouteProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteProtocols.swift; sourceTree = "<group>"; };
+		83DB46CC2A3EEF32009A6FA3 /* CharactersViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CharactersViewController.xib; sourceTree = "<group>"; };
+		83DB46CE2A3EEF8A009A6FA3 /* DetailCharacterViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailCharacterViewController.xib; sourceTree = "<group>"; };
+		83DB46D02A3EEFC9009A6FA3 /* LocationsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LocationsViewController.xib; sourceTree = "<group>"; };
 		83DBBC8129F08192009ECD90 /* CharacterViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterViewCellViewModel.swift; sourceTree = "<group>"; };
 		83DBBC8329F08AA2009ECD90 /* CharacterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterCell.swift; sourceTree = "<group>"; };
 		83DBBC8429F08AA2009ECD90 /* CharacterCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CharacterCell.xib; sourceTree = "<group>"; };
@@ -219,6 +229,7 @@
 			isa = PBXGroup;
 			children = (
 				83D1A4A42A2EE05F00888038 /* LocationsViewController.swift */,
+				83DB46D02A3EEFC9009A6FA3 /* LocationsViewController.xib */,
 				83D1A4A62A2EE07F00888038 /* LocationsViewModel.swift */,
 				83D1A4A32A2EE04100888038 /* Cells */,
 			);
@@ -257,6 +268,7 @@
 			isa = PBXGroup;
 			children = (
 				83CADF422A31B29700828DC5 /* DetailCharacterViewController.swift */,
+				83DB46CE2A3EEF8A009A6FA3 /* DetailCharacterViewController.xib */,
 			);
 			path = DetailCharacter;
 			sourceTree = "<group>";
@@ -287,6 +299,22 @@
 			path = Commons;
 			sourceTree = "<group>";
 		};
+		83DB46C62A3EB90C009A6FA3 /* tabBar */ = {
+			isa = PBXGroup;
+			children = (
+				83DB46C72A3EB938009A6FA3 /* TabBarController.swift */,
+			);
+			path = tabBar;
+			sourceTree = "<group>";
+		};
+		83DB46C92A3EDB89009A6FA3 /* common */ = {
+			isa = PBXGroup;
+			children = (
+				83DB46CA2A3EE77B009A6FA3 /* RouteProtocols.swift */,
+			);
+			path = common;
+			sourceTree = "<group>";
+		};
 		83DEBAF12A3A558300D06127 /* Persistent */ = {
 			isa = PBXGroup;
 			children = (
@@ -298,6 +326,7 @@
 		83E0A738298F05D600099395 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				83DB46C62A3EB90C009A6FA3 /* tabBar */,
 				837424852A2BD9F6005ADEBC /* Locations */,
 				83DAC8822995A52200C4F924 /* Commons */,
 				83E0A739298F05E300099395 /* Characters */,
@@ -311,6 +340,7 @@
 				83CADF3D2A31AE8900828DC5 /* DetailCharacter */,
 				83E0A73A298F060300099395 /* Cells */,
 				833F49BE286BDB26002D410A /* CharactersViewController.swift */,
+				83DB46CC2A3EEF32009A6FA3 /* CharactersViewController.xib */,
 				83E0A73B298F092100099395 /* CharactersViewModel.swift */,
 			);
 			path = Characters;
@@ -340,6 +370,7 @@
 		83F13A9C28EF78A8007B549B /* RMRoutes */ = {
 			isa = PBXGroup;
 			children = (
+				83DB46C92A3EDB89009A6FA3 /* common */,
 				832D63A328825231005FD375 /* RMLocationRoute.swift */,
 				83DA2C30288893F40073F97E /* RMEpisodeRoute.swift */,
 				833F49D1286BDDEA002D410A /* RMCharacterRoute.swift */,
@@ -432,7 +463,10 @@
 				833F49C7286BDB27002D410A /* LaunchScreen.storyboard in Resources */,
 				833F49C4286BDB27002D410A /* Assets.xcassets in Resources */,
 				83E0910C2A397E5300B7A06A /* NothingFoundCell.xib in Resources */,
+				83DB46D12A3EEFC9009A6FA3 /* LocationsViewController.xib in Resources */,
+				83DB46CF2A3EEF8A009A6FA3 /* DetailCharacterViewController.xib in Resources */,
 				833F49C2286BDB26002D410A /* Main.storyboard in Resources */,
+				83DB46CD2A3EEF32009A6FA3 /* CharactersViewController.xib in Resources */,
 				83D1A4AD2A2EE23E00888038 /* LocationCell.xib in Resources */,
 				83DBBC8629F08AA2009ECD90 /* CharacterCell.xib in Resources */,
 			);
@@ -463,8 +497,10 @@
 				83218425289C940900DAC61A /* RMResponses.swift in Sources */,
 				83F13AA028EF79AA007B549B /* RMLocation.swift in Sources */,
 				835DFD78288C9BAF003BBFFF /* RMError.swift in Sources */,
+				83DB46CB2A3EE77B009A6FA3 /* RouteProtocols.swift in Sources */,
 				83E0A73C298F092100099395 /* CharactersViewModel.swift in Sources */,
 				83D1A4AF2A2EEBC900888038 /* LocationCellViewModel.swift in Sources */,
+				83DB46C82A3EB938009A6FA3 /* TabBarController.swift in Sources */,
 				83DEBB072A3A9DEF00D06127 /* Character+CoreDataClass.swift in Sources */,
 				83BC6A432A2A90AA00DC05A8 /* RMDefaultDataManagerLocation.swift in Sources */,
 				833F49BF286BDB26002D410A /* CharactersViewController.swift in Sources */,

@@ -14,22 +14,8 @@ struct Info: Codable {
     var prev: String?
 }
 
-struct CharacterResponseHelper: Decodable {
+struct ResponseHelper <RMType: Decodable>: Decodable {
     var info: Info
-    var results: [RMCharacter]
-    init(results: [RMCharacter], info: Info) {
-        self.info = info 
-        self.results = results
-    }
-}
-
-struct LocationResponseHelper: Decodable {
-    var info: Info
-    var results: [RMLocation]
-}
-
-struct EpisodeResponseHelper: Decodable {
-    var info: Info
-    var results: [RMEpisode]
+    var results: [RMType]
 }
 

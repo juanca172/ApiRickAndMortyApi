@@ -10,11 +10,11 @@ import Foundation
 protocol RMCharacterDataManagerProtocol {
     //Function that brigs the page of characters
     //parametro de entrada pageNumber el cual nos sirve para saber en que pagina esta
-    func getCharactersByPage(pageNumber: Int, completion: @escaping (Result<[RMCharacter],Error>) -> Void)
+    func getTypeByPage<T: Decodable>(pageNumber: Int, request: URLRequest, completion: @escaping (Result<[T],Error>) -> Void)
     
     //Function that brings a single character
     //parameter id para traer el pesonaje con esa id
-    func getOneCharacterById(id: Int, completion: @escaping (Result<RMCharacter, Error>) -> Void)
+    func getOneCharacterById<T: Decodable>(id: Int, request: URLRequest,completion: @escaping (Result<T, Error>) -> Void)
     
     //Function that brings a group of characters
     //parameter ids para traer el conjunto de pesonajes
@@ -22,7 +22,7 @@ protocol RMCharacterDataManagerProtocol {
     
     //function that Character filter
     //Parameter that filter characters
-    func filterParams(filters: [RMCharacterFilterProtocol], completion: @escaping (Result<[RMCharacter], Error>) -> Void)
+    func filterParams(filters: [RMFilterProtocol], completion: @escaping (Result<[RMCharacter], Error>) -> Void)
     
     //funtion that bring all characters
     func getAllCharacters(completion: @escaping (Result <[RMCharacter], Error>) -> Void)

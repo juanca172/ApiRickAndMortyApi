@@ -12,14 +12,14 @@ protocol LocationViewModelProtocol: AnyObject {
     func getNumberOfSections() -> Int
     func getNumberOfRows(_ section: Int) -> Int
     func getCellViewModel(indexPath: IndexPath) -> RMTableViewCellModelProtocol
-    func updateData()
+    //func updateData()
 
     var reloadData: (() -> ())? { get set }
 }
 
 final class LocationViewModel {
     private var locationSections : [[RMLocation]] = []
-    private var page = 1
+    private var page = 7
     private var isCharging = false
     private let dataManager: RMLocationDataManagerProtocol
     
@@ -31,7 +31,6 @@ final class LocationViewModel {
     
     func loadData(newPage: Int) {
         if isCharging == false {
-            
             dataManager.getPageLocation(page: newPage) { [weak self] (result:Result<[RMLocation], Error>) in
                 guard let weakSelf = self else {
                     return
@@ -56,15 +55,15 @@ final class LocationViewModel {
 //MARK: -DataMethods
 extension LocationViewModel: LocationViewModelProtocol {
     
-    func updateData() {
-        if self.isCharging == true {
+    /*func updateData() {
+        if self.isCharging == false {
             self.page += 1
             self.isCharging = false
             self.loadData(newPage: self.page)
         } else {
             print("paginando")
         }
-    }
+    }*/
     
     func start() {
         loadData(newPage: self.page)

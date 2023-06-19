@@ -12,5 +12,5 @@ protocol RMLocationDataManagerProtocol {
     func getASingleLocation(id: Int, complition: @escaping (Result <RMLocation, Error>) -> Void)
     func getMultipleLocations (ids: [Int], complition: @escaping (Result<[RMLocation], Error>) -> Void)
     func getPageLocation (page: Int, complition: @escaping (Result<[RMLocation], Error>) -> Void)
-    func getFilterLocations (filters: [RMFilterLocationProtocol], complition: @escaping (Result <[RMLocation], Error>) -> Void)
+    func getFilterLocations (filters: [RMFilterProtocol], complition: @escaping (Result <[RMLocation], Error>) -> Void)
 }

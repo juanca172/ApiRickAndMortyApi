@@ -83,11 +83,7 @@ extension CharactersViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        if viewModel?.detailCharacter() != nil {
-            return indexPath
-        } else {
-            return nil
-        }
+        return indexPath
     }
     
 }
@@ -109,14 +105,14 @@ extension CharactersViewController {
     //MARK: -Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
-            let controller = segue.destination as? DetailCharacterViewController
-            controller?.modalPresentationStyle = .overFullScreen
+            guard let controller = segue.destination as? DetailCharacterViewController else {
+                return
+            }
+            controller.modalPresentationStyle = .overFullScreen
             let indexpath = sender as! IndexPath
-            let arregloCharacters = viewModel?.detailCharacter()
-            let character = arregloCharacters?[indexpath.section][indexpath.row]
-            controller?.character = character
+            controller.idToSearch = viewModel?.getId(indexPath: indexpath)
             //Enviamos coredata
-            controller?.managedObjectContext = managedObjectContext
+            controller.managedObjectContext = managedObjectContext
         }
     }
     

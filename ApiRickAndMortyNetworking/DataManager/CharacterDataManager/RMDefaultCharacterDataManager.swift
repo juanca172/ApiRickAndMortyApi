@@ -15,33 +15,39 @@ struct RMDefaultCharacterDataManager: RMCharacterDataManagerProtocol {
         self.networkProvider = networkProvider
     }
     
-    func getCharactersByPage(pageNumber: Int, completion: @escaping (Result<[RMCharacter],Error>) -> Void) {
-        let request = RMCharacterRoute.getPageCharacter(pageNumber: pageNumber).URLRequestComplete
-        networkProvider.getData(urlRequest: request) { (result: Result<CharacterResponseHelper, RMError>) in
+    
+    func getTypeByPage<T>(pageNumber: Int,request: URLRequest , completion: @escaping (Result<[T], Error>) -> Void) where T : Decodable {
+        
+        networkProvider.getData(urlRequest: request) { (result: Result<ResponseHelper<T>, RMError>) in
             switch result {
             case .success(let response):
-                completion(.success(response.results))
+                if let result = response.results as? [T] {
+                    completion(.success(result))
+                }
             case .failure(let error):
                 completion(.failure(error))
             }
         }
     }
     
-    func getOneCharacterById(id: Int, completion: @escaping (Result<RMCharacter, Error>) -> Void) {
-        let identifier = id > 0 ? id : 1
-        let request = RMCharacterRoute.getOneCharacter(id: identifier).URLRequestComplete
+    func getOneCharacterById<T>(id: Int, request: URLRequest, completion: @escaping (Result<T, Error>) -> Void) where T : Decodable {
+                
         networkProvider.getData(urlRequest: request) { (result: Result<RMCharacter, RMError>) in
             switch result {
+                
             case .success(let character):
-                completion(.success(character))
+                if let character = character as? T {
+                    completion(.success(character))
+                }
             case .failure(let error) :
                 completion(.failure(error))
+                
             }
         }
     }
     
     func getAGroupOfCharacters(ids: [Int], completion: @escaping (Result<[RMCharacter], Error>) -> Void) {
-        let request = RMCharacterRoute.getMultipleCharacters(ids: ids).URLRequestComplete
+        let request = RMCharacterRoute.getMultipleCharacters(ids: ids).urlRequestComplete
         networkProvider.getData(urlRequest: request) { (result: Result<[RMCharacter], RMError>) in
             switch result {
             case .success(let characters):
@@ -52,10 +58,9 @@ struct RMDefaultCharacterDataManager: RMCharacterDataManagerProtocol {
         }
     }
     
-    func filterParams(filters: [RMCharacterFilterProtocol], completion: @escaping (Result<[RMCharacter], Error>) -> Void) {
-        let request = RMCharacterRoute.filterCharacter(filterProtocol: filters).URLRequestComplete
-        print(request.url?.absoluteString)
-        networkProvider.getData(urlRequest: request) { (result: Result<CharacterResponseHelper, RMError>) in
+    func filterParams(filters: [RMFilterProtocol], completion: @escaping (Result<[RMCharacter], Error>) -> Void) {
+        let request = RMCharacterRoute.filterCharacter(filterProtocol: filters).urlRequestComplete
+        networkProvider.getData(urlRequest: request) { (result: Result<ResponseHelper, RMError>) in
             switch result {
             case .success(let characters):
                 completion(.success(characters.results))
@@ -67,8 +72,8 @@ struct RMDefaultCharacterDataManager: RMCharacterDataManagerProtocol {
     }
     
     func getAllCharacters(completion: @escaping (Result<[RMCharacter], Error>) -> Void) {
-        let request = RMCharacterRoute.getAllCharacter.URLRequestComplete
-        networkProvider.getData(urlRequest: request) { (result: Result<CharacterResponseHelper, RMError>) in
+        let request = RMCharacterRoute.getAllCharacter.urlRequestComplete
+        networkProvider.getData(urlRequest: request) { (result: Result<ResponseHelper, RMError>) in
             switch result {
             case .success(let characters):
                 completion(.success(characters.results))
