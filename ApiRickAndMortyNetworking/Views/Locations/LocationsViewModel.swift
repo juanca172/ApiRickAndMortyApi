@@ -25,13 +25,15 @@ final class LocationViewModel {
     
     var reloadData: (() -> ())?
     
-    init(dataManager: RMLocationDataManagerProtocol = RMDefaultDataManagerLocation()) {
+    init(dataManager: RMLocationDataManagerProtocol = RMDefaultDataManagerLocation(networKProvider: NetworkProvider())) {
         self.dataManager = dataManager
     }
     
     func loadData(newPage: Int) {
         if isCharging == false {
-            dataManager.getPageLocation(page: newPage) { [weak self] (result:Result<[RMLocation], Error>) in
+            let request = RMLocationRoute.getPageIndicated(page: newPage).urlRequestComplete
+            dataManager.getPageLocation(page: newPage, request: request) { [weak self] (result: Result<[RMLocation], Error>) in
+                
                 guard let weakSelf = self else {
                     return
                 }
@@ -44,13 +46,13 @@ final class LocationViewModel {
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
+                
             }
+            
+            
         }
     }
-    
-    
 }
-
 
 //MARK: -DataMethods
 extension LocationViewModel: LocationViewModelProtocol {

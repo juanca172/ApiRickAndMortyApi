@@ -29,7 +29,7 @@ class TabBarController: UITabBarController {
         }
     
     func setupVCs() {
-            setViewControllers([createNavController(for: CharactersViewController(), title: "character", image: UIImage(systemName: "person")!),createNavController(for: LocationsViewController(), title: "Second", image: UIImage(systemName: "location")!)], animated: true)
+            setViewControllers([createNavController(for: CharactersViewController(), title: "characters", image: UIImage(systemName: "person")!),createNavController(for: LocationsViewController(), title: "locations", image: UIImage(systemName: "location")!), createNavController(for: EpisodesViewController(), title: "Episodes", image: UIImage(systemName: "sleep")!)], animated: true)
         }
 
 }

@@ -25,6 +25,7 @@ class LocationsViewController: UIViewController, UIScrollViewDelegate {
         tableView.delegate = self
         tableView.dataSource = self
     }
+    
     private func configureViewModel() {
         viewModel = LocationViewModel()
         viewModel?.start()

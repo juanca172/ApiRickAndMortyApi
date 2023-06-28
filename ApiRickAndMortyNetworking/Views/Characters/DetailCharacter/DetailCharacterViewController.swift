@@ -9,8 +9,8 @@ import UIKit
 import CoreData
 
 final class DetailCharacterViewController: UIViewController {
-
-    @IBOutlet private weak var pop_upView: UIView!
+  
+    
     @IBOutlet private weak var speciesLabel: UILabel!
     @IBOutlet private weak var typeLabel: UILabel!
     @IBOutlet private weak var statusLabel: UILabel!
@@ -18,7 +18,7 @@ final class DetailCharacterViewController: UIViewController {
     @IBOutlet private weak var CharacterImage: UIImageView!
     var managedObjectContext: NSManagedObjectContext!
     private var viewModel: CharacterViewModelProtocol?
-    var idToSearch : Int!
+    var idToSearch: Int!
     private var characterGet: RMCharacter?
     
     override func viewDidLoad() {
@@ -31,6 +31,10 @@ final class DetailCharacterViewController: UIViewController {
             }
         }
         // Do any additional setup after loading the view.
+    }
+    
+    deinit {
+        print("Murio")
     }
     
     
@@ -62,6 +66,7 @@ final class DetailCharacterViewController: UIViewController {
     }
     
     func updateUI(to: RMCharacter) {
+        characterGet = to
         nameLabel.text = to.name
         statusLabel.text = to.status.rawValue
         typeLabel.text = to.type
@@ -82,6 +87,7 @@ final class DetailCharacterViewController: UIViewController {
             }
 
         }
+        
     }
 
 }

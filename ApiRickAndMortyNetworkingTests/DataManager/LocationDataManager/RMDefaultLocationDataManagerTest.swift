@@ -24,7 +24,7 @@ final class RMDefaultLocationDataManagerTest: XCTestCase {
         // In UI tests it is usually best to stop immediately when a failure occurs.
         continueAfterFailure = false
         RMNetworProviderMock = NetworkProviderMockLocations()
-        dataManager = RMDefaultDataManagerLocation(networkProvider: RMNetworProviderMock)
+        dataManager = RMDefaultDataManagerLocation(networKProvider: RMNetworProviderMock)
 
         // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
     }
@@ -33,12 +33,13 @@ final class RMDefaultLocationDataManagerTest: XCTestCase {
     func test_RMDefaultDataManagerLocation_Get_All_Location_succes() {
         //Given
         let locationResult = RMLocation(id: 1, name: "Earth", type: "Planet", dimension: "Dimension C-137", residents:["https://rickandmortyapi.com/api/character/1","https://rickandmortyapi.com/api/character/2"], url: "https://rickandmortyapi.com/api/location/1", created: "2017-11-10T12:42:04.162Z")
-        let locationInfo = Info(count: 126, pages: 7, next: "https://rickandmortyapi.com/api/location?page=2", prev: nil)
+        let locationInfo = ResponseHelper<RMLocation>.Info(count: 126, pages: 7, next: "https://rickandmortyapi.com/api/location?page=2", prev: nil)
         let RMResponseLocation = ResponseHelper(info: locationInfo, results: [locationResult])
         RMNetworProviderMock.dataToReturn = RMResponseLocation
         let expectation = XCTestExpectation(description: "test_RMDefaultDataManagerLocation_Get_All_Location_succes")
+        let request = RMLocationRoute.getAllLocations.urlRequestComplete
         //When
-        dataManager.getAllLocations { (result: Result<[RMLocation], Error>) in
+        dataManager.getAllLocations(request: request) { (result: Result<[RMLocation], Error>) in
             switch result {
             case.success(let locations):
                 //Then
@@ -50,7 +51,6 @@ final class RMDefaultLocationDataManagerTest: XCTestCase {
             }
         }
         wait(for: [expectation], timeout: 2.5)
-
     }
     
     func test_RMDefaultDatamanager_Get_Single_Location_Succes() {
@@ -58,8 +58,9 @@ final class RMDefaultLocationDataManagerTest: XCTestCase {
         let locationMock = RMLocation(id: 1, name: "Earth", type: "Planet", dimension: "Dimension C-137", residents:["https://rickandmortyapi.com/api/character/1","https://rickandmortyapi.com/api/character/2"], url: "https://rickandmortyapi.com/api/location/1", created: "2017-11-10T12:42:04.162Z")
         RMNetworProviderMock.dataToReturn = locationMock
         let expectation = XCTestExpectation(description: "test_RMDefaultDatamanager_Get_Single_Location_Succes")
+        let request = RMLocationRoute.getASingleLocation(id: locationMock.id).urlRequestComplete
         //When
-        dataManager.getASingleLocation(id: locationMock.id) { (result:Result<RMLocation, Error>) in
+        dataManager.getASingleLocation(id: locationMock.id, request: request) { (result: Result<RMLocation, Error>) in
             switch result {
             case.success(let location):
                 //then
@@ -70,18 +71,18 @@ final class RMDefaultLocationDataManagerTest: XCTestCase {
                 break
             }
         }
+        
         wait(for: [expectation], timeout: 2.5)
     }
     
     func test_RMDefaultDatamanager_Get_Multiple_Locations_Succes() {
         //Given
         let locationMock = RMLocation(id: 1, name: "Earth", type: "Planet", dimension: "Dimension C-137", residents:["https://rickandmortyapi.com/api/character/1","https://rickandmortyapi.com/api/character/2"], url: "https://rickandmortyapi.com/api/location/1", created: "2017-11-10T12:42:04.162Z")
-        let locationInfo = Info(count: 126, pages: 7, next: "https://rickandmortyapi.com/api/location?page=2", prev: nil)
-        let responseLocation = ResponseHelper(info: locationInfo, results: [locationMock])
-        RMNetworProviderMock.dataToReturn = responseLocation
+        RMNetworProviderMock.dataToReturn = [locationMock]
         let expectation = XCTestExpectation(description: "test_RMDefaultDatamanager_Get_Multiple_Locations_Succes")
+        let request = RMLocationRoute.getMultipleLocations(ids: [locationMock.id]).urlRequestComplete
         //When
-        dataManager.getMultipleLocations(ids: [1]) { (result:Result<[RMLocation], Error>) in
+        dataManager.getMultipleLocations(ids: [locationMock.id], request: request) { (result: Result<[RMLocation], Error>) in
             switch result {
             case.success(let locations):
                 XCTAssertEqual(locations.first?.id, locationMock.id)
@@ -97,15 +98,16 @@ final class RMDefaultLocationDataManagerTest: XCTestCase {
     func test_RMDefaultDatamanager_Get_Filter_Location_Succes() {
         //Given
         let locationMock = RMLocation(id: 1, name: "Earth", type: "Planet", dimension: "Dimension C-137", residents:["https://rickandmortyapi.com/api/character/1","https://rickandmortyapi.com/api/character/2"], url: "https://rickandmortyapi.com/api/location/1", created: "2017-11-10T12:42:04.162Z")
-        let locationInfo = Info(count: 126, pages: 7, next: "https://rickandmortyapi.com/api/location?page=2", prev: nil)
+        let locationInfo = ResponseHelper<RMLocation>.Info(count: 126, pages: 7, next: "https://rickandmortyapi.com/api/location?page=2", prev: nil)
         let responseLocation = ResponseHelper(info: locationInfo, results: [locationMock])
         
         RMNetworProviderMock.dataToReturn = responseLocation
         
         let filterLocation = RMNameLocation(name: "Earth2")
+        let request = RMLocationRoute.filterLocation(filterProtocol: [filterLocation]).urlRequestComplete
         let expectation = expectation(description: "test_RMDefaultDatamanager_Get_Filter_Location_Succes")
         //When
-        dataManager.getFilterLocations(filters: [filterLocation]) { (result:Result<[RMLocation], Error>) in
+        dataManager.getFilterLocations(request: request) { (result: Result<[RMLocation], Error>) in
             switch result {
             case.success(let locations):
                 XCTAssertEqual(locations.first?.name, locationMock.name)

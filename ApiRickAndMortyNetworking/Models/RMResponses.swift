@@ -7,14 +7,17 @@
 
 import Foundation
 
-struct Info: Codable {
-    var count: Int
-    var pages: Int
-    var next: String?
-    var prev: String?
-}
+
 
 struct ResponseHelper <RMType: Decodable>: Decodable {
+    
+    struct Info: Codable {
+        var count: Int
+        var pages: Int
+        var next: String?
+        var prev: String?
+    }
+    
     var info: Info
     var results: [RMType]
 }

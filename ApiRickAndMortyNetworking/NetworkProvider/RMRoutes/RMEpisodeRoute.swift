@@ -11,12 +11,14 @@ import Foundation
 enum RMEpisodesRoute: URLComplete {
     static let domain = "https://rickandmortyapi.com/api"
     case getAllEpisodes
+    case getEpisodePage(page: Int)
     case getASingleEpisode(episodeId: Int)
     case getMultipleEpisodes(episodes: [Int])
     case filterEpisodes(filteraBy: [RMFilterProtocol])
 }
 extension RMEpisodesRoute {
     var finalURL: String {
+        
         var compound = URLComponents()
         switch self {
         case .getAllEpisodes:
@@ -36,6 +38,14 @@ extension RMEpisodesRoute {
             compound.queryItems = mapping
             compound.path = "/episode/"
             return compound.string ?? ""
+        case.getEpisodePage(page: let page):
+            
+            assert(page > 0, "La pagina \(page) no existe")
+            compound.path = "/episode"
+            let queryToken = URLQueryItem(name: "page", value: "\(page)")
+            compound.queryItems = [queryToken]
+            return compound.string ?? ""
+            
         }
     }
 }

@@ -27,7 +27,7 @@ class RMDefaultCharacterDataManagerTests: XCTestCase {
     func test_RMDefaultCharacterDataManager_Get_Page_Success() {
         //Given
         let characterMock = RMCharacter(id: 1, name: "Rick", status: .Alive, species: "Dog", type: "Human", gender: .Male, image: "")
-        let infoMock = Info(count: 2, pages: 3, next: "", prev: nil)
+        let infoMock = ResponseHelper<RMCharacter>.Info(count: 2, pages: 3, next: "", prev: nil)
         let characterResponseHelperMock = ResponseHelper(info: infoMock, results: [characterMock])
         networkProviderMock.dataToReturn = characterResponseHelperMock
         let request = RMCharacterRoute.getPageCharacter(pageNumber: 2).urlRequestComplete
@@ -53,12 +53,13 @@ class RMDefaultCharacterDataManagerTests: XCTestCase {
     func test_RMDefaultCharacterDataManager_Get_All_Character_Success() {
         //Given
         let characterMock = RMCharacter(id: 1, name: "Morty", status: .Alive, species: "Human", type: "Dog", gender: .Male, image: "")
-        let infoMock = Info(count: 1, pages: 3, next: "", prev: nil)
+        let infoMock = ResponseHelper<RMCharacter>.Info(count: 1, pages: 3, next: "", prev: nil)
         let characterResponseHelperMock = ResponseHelper(info: infoMock, results: [characterMock])
         networkProviderMock.dataToReturn = characterResponseHelperMock
         let expectation = XCTestExpectation(description: "test_RMDefaultCharacterDataManager_Get_All_Character_Success")
+        let request = RMCharacterRoute.getAllCharacter.urlRequestComplete
         //When
-        dataManager.getAllCharacters { (result: Result<[RMCharacter], Error>) in
+        dataManager.getAllCharacters(request: request) { (result: Result<[RMCharacter], Error>) in
             switch result {
             case .success(let success):
                 //then
@@ -99,7 +100,9 @@ class RMDefaultCharacterDataManagerTests: XCTestCase {
         let characterResponseMock = [characterMock1]
         networkProviderMock.dataToReturn = characterResponseMock
         let expectation = XCTestExpectation(description: "test_RMDefaultCharacterDataManager_Get_Multiple_Characters_Success")
-        dataManager.getAGroupOfCharacters(ids: [12]) { (result: Result<[RMCharacter], Error>) in
+        let request = RMCharacterRoute.getMultipleCharacters(ids: [3]).urlRequestComplete
+        
+        dataManager.getAGroupOfCharacters(ids: [3], request: request) { (result: Result<[RMCharacter], Error>) in
             switch result {
             case .success(let success):
                 XCTAssertEqual(success.first?.id, characterMock1.id)
@@ -119,7 +122,8 @@ class RMDefaultCharacterDataManagerTests: XCTestCase {
         let filterCharacter = RMNameCharacter(name: "Morty Smith")
         networkProviderMock.dataToReturn = characterResponseMock
         let expectation = XCTestExpectation(description: "test_RMDefaultCharacterDataManager_Get_Filter_Character_Succes")
-        dataManager.filterParams(filters: [filterCharacter]) { (result: Result<[RMCharacter], Error>) in
+        let request = RMEpisodesRoute.filterEpisodes(filteraBy: [filterCharacter]).urlRequestComplete
+        dataManager.filterParams(request: request) { (result: Result<[RMCharacter], Error>) in
             switch result {
             case .success(let success):
                 XCTAssertEqual(success.first?.id, 2)
@@ -132,32 +136,6 @@ class RMDefaultCharacterDataManagerTests: XCTestCase {
         }
         wait(for: [expectation], timeout: 2.5)
     }
-    
-    /*func test_get_characters_by_page() {
-        let apiUrl = URL(string: "https://cuev.com")!
-        let request = URLRequest(url: apiUrl)
-        let configuration = URLSessionConfiguration.default
-        configuration.protocolClasses = [MockURLProtocol.self]
-        let urlSession = URLSession(configuration: configuration)
-        let expectation = XCTestExpectation(description: "MockFailure")
-        let arrayToEncode = ["Juan", "Camilo"]
-        let data = try! JSONEncoder().encode(arrayToEncode)
-        MockURLProtocol.requestHandler = { request in
-            let response = HTTPURLResponse(url: apiUrl, statusCode: 200, httpVersion: nil, headerFields: nil)!
-             return (response, data)
-        }
-        let instance = NetworkProviderMock(urlSession: urlSession)
-        var probe = RMDefaultCharacterDataManager(networkProvider: instance)
-        probe.getCharactersByPage(pageNumber: 2) { (result:Result<[String], Error>) in
-            switch result {
-            case .success(let success):
-                XCTAssertEqual(success[0], "Juan")
-            case .failure(let failure):
-                break
-            }
-        }
-         
-    }*/
    
 }
 

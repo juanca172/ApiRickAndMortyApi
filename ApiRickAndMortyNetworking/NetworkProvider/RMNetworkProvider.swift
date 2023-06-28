@@ -37,7 +37,7 @@ struct NetworkProvider: NetworkProviderProtocol {
             } catch {
                 completion(.failure(.imposibleDecodiar))
             }
-            
+    
         
         }.resume()
     }

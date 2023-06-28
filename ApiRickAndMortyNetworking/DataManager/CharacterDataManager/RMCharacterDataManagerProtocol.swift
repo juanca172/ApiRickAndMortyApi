@@ -18,14 +18,14 @@ protocol RMCharacterDataManagerProtocol {
     
     //Function that brings a group of characters
     //parameter ids para traer el conjunto de pesonajes
-    func getAGroupOfCharacters(ids: [Int], completion: @escaping (Result<[RMCharacter],Error>) -> Void)
+    func getAGroupOfCharacters<T: Decodable>(ids: [Int],request: URLRequest ,completion: @escaping (Result<[T],Error>) -> Void)
     
     //function that Character filter
     //Parameter that filter characters
-    func filterParams(filters: [RMFilterProtocol], completion: @escaping (Result<[RMCharacter], Error>) -> Void)
+    func filterParams<T: Decodable>(request: URLRequest ,completion: @escaping (Result<[T], Error>) -> Void)
     
     //funtion that bring all characters
-    func getAllCharacters(completion: @escaping (Result <[RMCharacter], Error>) -> Void)
+    func getAllCharacters<T: Decodable>(request: URLRequest, completion: @escaping (Result <[T], Error>) -> Void)
     
 }
 
