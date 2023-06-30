@@ -32,19 +32,18 @@ final class CharactersViewModel: CharacterViewModelProtocol {
     private var filteredData : [[RMCharacter]] = []
     private var page = 1
     private var isPaginating = false
-    private let dataManager: RMCharacterDataManagerProtocol
+    private let dataManager: RMCharacterDatamanager
     private var characterObtained: RMCharacter?
     
     var reloadData: (() -> ())?
     
-    init(dataManager: RMCharacterDataManagerProtocol = RMDefaultCharacterDataManager(networkProvider: NetworkProvider())) {
+    init(dataManager: RMCharacterDatamanager = RMDefaultCharacterDataManager(networkProvider: NetworkProvider())) {
         self.dataManager = dataManager
     }
     
     func loadData(page: Int) {
         if isPaginating == false {
-            let request = RMCharacterRoute.getPageCharacter(pageNumber: page).urlRequestComplete
-            dataManager.getTypeByPage(pageNumber: page, request: request, completion: { [weak self] (result:Result<[RMCharacter], Error>) in
+            dataManager.getCharacterByPage(pageNumber: page) {[weak self] (result: Result<[RMCharacter], Error>) in
                 guard let weakSelf = self else {
                     return
                 }
@@ -56,16 +55,14 @@ final class CharactersViewModel: CharacterViewModelProtocol {
                 case .failure(let error):
                     print(error)
                 }
-            })
+            }
         }
     }
     
     func filterCharacter(for name: String) {
         filteredData  = []
         let filter = RMNameCharacter(name: name)
-        let request = RMCharacterRoute.filterCharacter(filterProtocol: [filter]).urlRequestComplete
-
-        dataManager.filterParams(request: request) { [weak self] (result:Result<[RMCharacter], Error>) in
+        dataManager.filterParams(filter: [filter]) {[weak self] (result: Result<[RMCharacter], Error>) in
             guard let weakSelf = self else {
                 return
             }
@@ -85,9 +82,7 @@ final class CharactersViewModel: CharacterViewModelProtocol {
         
         let identifier = given > 0 ? given : 1
 
-        let request = RMCharacterRoute.getOneCharacter(id: identifier).urlRequestComplete
-        
-        dataManager.getOneCharacterById(id: identifier, request: request) {[weak self] (result: Result<RMCharacter, Error>) in
+        dataManager.getOneCharacterById(id: identifier) { [weak self] (result: Result<RMCharacter, Error>) in
             guard let weakSelf = self else {
                 return
             }

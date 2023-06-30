@@ -8,9 +8,8 @@
 import Foundation
 
 protocol RMLocationDataManagerProtocol {
-    func getAllLocations<T: Decodable>(request: URLRequest,complition: @escaping (Result<[T], Error>) -> Void)
-    func getASingleLocation<T: Decodable>(id: Int, request: URLRequest ,complition: @escaping (Result <T, Error>) -> Void)
-    func getMultipleLocations<T: Decodable>(ids: [Int],request: URLRequest, complition: @escaping (Result<[T], Error>) -> Void)
-    func getPageLocation<T: Decodable> (page: Int, request: URLRequest ,complition: @escaping (Result<[T], Error>) -> Void)
-    func getFilterLocations<T: Decodable> (request: URLRequest,complition: @escaping (Result <[T], Error>) -> Void)
+    func getASingleLocation(id: Int,completion: @escaping (Result <RMLocation, Error>) -> Void)
+    func getMultipleLocations(ids: [Int], completion: @escaping (Result<[RMLocation], Error>) -> Void)
+    func getPageLocation (page: Int ,completion: @escaping (Result<[RMLocation], Error>) -> Void)
+    func getFilterLocations(filterParams: [RMFilterProtocol],completion: @escaping (Result <[RMLocation], Error>) -> Void)
 }

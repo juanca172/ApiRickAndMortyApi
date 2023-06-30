@@ -9,39 +9,38 @@ import Foundation
 
 
 
-struct RMDefaultCharacterDataManager: RMDataManager {
+struct RMDefaultCharacterDataManager {
     
     var networKProvider: NetworkProviderProtocol
-    typealias T = RMCharacter
+    var dataManager: RMDataManager<RMCharacter>
     
     init(networkProvider: NetworkProviderProtocol) {
         self.networKProvider = networkProvider
+        self.dataManager = RMDataManager(networKProvider: networkProvider)
     }
     
 }
 
-extension RMDefaultCharacterDataManager: RMCharacterDataManagerProtocol {
+extension RMDefaultCharacterDataManager: RMCharacterDatamanager {
     
-    func getTypeByPage<T>(pageNumber: Int, request: URLRequest, completion: @escaping (Result<[T], Error>) -> Void) where T : Decodable {
-        self.getPage(request: request) { (result: Result<ResponseHelper<RMCharacter>, RMError>) in
+    func getCharacterByPage(pageNumber: Int, completion: @escaping (Result<[RMCharacter], Error>) -> Void) {
+        let request = RMCharacterRoute.getPageCharacter(pageNumber: pageNumber).urlRequestComplete
+        dataManager.getPage(request: request) { (result: Result<ResponseHelper<RMCharacter>, RMError>) in
             switch result {
             case.success(let page):
-                if let fetchedPage = page.results as? [T] {
-                    completion(.success(fetchedPage))
-                }
+                completion(.success(page.results))
             case.failure(let error):
                 completion(.failure(error))
             }
         }
     }
     
-    func getOneCharacterById<T>(id: Int, request: URLRequest, completion: @escaping (Result<T, Error>) -> Void) where T : Decodable {
-        self.getOne(request: request) { (result:Result<RMCharacter, RMError>) in
+    func getOneCharacterById(id: Int, completion: @escaping (Result<RMCharacter, Error>) -> Void) {
+        let request = RMCharacterRoute.getOneCharacter(id: id).urlRequestComplete
+        dataManager.getOne(request: request) { (result:Result<RMCharacter, RMError>) in
             switch result {
             case.success(let char):
-                if let character =  char as? T {
-                    completion(.success(character))
-                }
+                completion(.success(char))
             case.failure(let error):
                 completion(.failure(error))
             }
@@ -49,46 +48,30 @@ extension RMDefaultCharacterDataManager: RMCharacterDataManagerProtocol {
         
     }
     
-    func getAGroupOfCharacters<T>(ids: [Int], request: URLRequest, completion: @escaping (Result<[T], Error>) -> Void) where T : Decodable {
-        self.getMultiple(request: request) { (result: Result<[RMCharacter], RMError>) in
+    func getAGroupOfCharacters(ids: [Int], completion: @escaping (Result<[RMCharacter], Error>) -> Void) {
+        let request = RMCharacterRoute.getMultipleCharacters(ids: ids).urlRequestComplete
+        dataManager.getMultiple(request: request) { (result: Result<[RMCharacter], RMError>) in
             switch result {
             case.success(let characters):
-                if let fetchedChars = characters as? [T] {
-                    completion(.success(fetchedChars))
-                }
+                completion(.success(characters))
             case.failure(let error):
                 completion(.failure(error))
             }
         }
     }
     
-    func filterParams<T>(request: URLRequest, completion: @escaping (Result<[T], Error>) -> Void) where T : Decodable {
-        self.filterData(request: request) { (result: Result<ResponseHelper<RMCharacter>, RMError>) in
+    func filterParams(filter: [RMFilterProtocol], completion: @escaping (Result<[RMCharacter], Error>) -> Void) {
+        let request = RMCharacterRoute.filterCharacter(filterProtocol: filter).urlRequestComplete
+        dataManager.filterData(request: request) { (result: Result<ResponseHelper<RMCharacter>, RMError>) in
             switch result {
             case .success(let characters):
-                if let fetchedCharacters = characters.results as? [T] {
-                    completion(.success(fetchedCharacters))
-                }
+                completion(.success(characters.results))
             case .failure(let error):
                 completion(.failure(error))
             }
-        
         }
-       
     }
     
-    func getAllCharacters<T>(request: URLRequest, completion: @escaping (Result<[T], Error>) -> Void) where T : Decodable {
-        self.getAll(request: request) { (result:Result<ResponseHelper<RMCharacter>, RMError>) in
-            switch result {
-            case .success(let characters):
-                if let fetchedCharacters = characters.results as? [T] {
-                    completion(.success(fetchedCharacters))
-                }
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
-    }
     
 }/*
 struct RMDefaultCharacterDataManager: RMCharacterDataManagerProtocol {

@@ -31,9 +31,7 @@ final class LocationViewModel {
     
     func loadData(newPage: Int) {
         if isCharging == false {
-            let request = RMLocationRoute.getPageIndicated(page: newPage).urlRequestComplete
-            dataManager.getPageLocation(page: newPage, request: request) { [weak self] (result: Result<[RMLocation], Error>) in
-                
+            dataManager.getPageLocation(page: page) { [weak self] (result:Result<[RMLocation], Error>) in
                 guard let weakSelf = self else {
                     return
                 }
@@ -46,9 +44,7 @@ final class LocationViewModel {
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
-                
             }
-            
             
         }
     }

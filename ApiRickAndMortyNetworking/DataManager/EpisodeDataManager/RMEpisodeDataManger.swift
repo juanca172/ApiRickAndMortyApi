@@ -7,79 +7,62 @@
 
 import Foundation
 
-struct RMEpisodeDataManger: RMDataManager {
-    typealias T = RMEpisode
-    
+struct RMEpisodeDataManger {
     var networKProvider: NetworkProviderProtocol
+    let dataManager: RMDataManager<RMEpisode>
     
     init(networKProvider: NetworkProviderProtocol) {
         self.networKProvider = networKProvider
+        self.dataManager = RMDataManager(networKProvider: networKProvider)
     }
 }
 
 extension RMEpisodeDataManger: RMEpisodeDatamangerProtocol {
     
-    func getAllEpisodes<T>(request: URLRequest, complition: @escaping (Result<[T], Error>) -> Void) where T : Decodable {
-        self.getAll(request: request) { (result: Result<ResponseHelper<RMEpisode>, RMError>) in
-            switch result {
-            case .success(let response):
-                if let result = response.results as? [T] {
-                    complition(.success(result))
-                }
-            case.failure(let error):
-                complition(.failure(error))
-            }
-        }
-    }
-    
-    func getASingleEpisode<T>(id: Int, request: URLRequest, complition: @escaping (Result<T, Error>) -> Void) where T : Decodable {
-        self.getOne(request: request) { (result: Result<RMEpisode, RMError>) in
+    func getASingleEpisode(id: Int, completion: @escaping (Result<RMEpisode, Error>) -> Void) {
+        let request = RMEpisodesRoute.getASingleEpisode(episodeId: id).urlRequestComplete
+        dataManager.getOne(request: request) { (result: Result<RMEpisode, RMError>) in
             switch result {
             case.success(let episode):
-                if let episode = episode as? T {
-                    complition(.success(episode))
-                }
+                completion(.success(episode))
             case.failure(let error):
-                complition(.failure(error))
+                completion(.failure(error))
             }
         }
     }
     
-    func getMultipleEpisodes<T>(ids: [Int], request: URLRequest, complition: @escaping (Result<[T], Error>) -> Void) where T : Decodable {
-        self.getMultiple(request: request) { (result: Result<[RMEpisode], RMError>) in
+    func getMultipleEpisodes(ids: [Int], completion: @escaping (Result<[RMEpisode], Error>) -> Void) {
+        let request = RMEpisodesRoute.getMultipleEpisodes(episodes: ids).urlRequestComplete
+        dataManager.getMultiple(request: request) { (result: Result<[RMEpisode], RMError>) in
             switch result {
             case.success(let episodes):
-                if let episod = episodes as? [T] {
-                    complition(.success(episod))
-                }
+                completion(.success(episodes))
             case.failure(let error):
-                complition(.failure(error))
+                completion(.failure(error))
             }
         }
     }
     
-    func getPageEpisode<T>(page: Int, request: URLRequest, complition: @escaping (Result<[T], Error>) -> Void) where T : Decodable {
-        self.getPage(request: request) { (result: Result<ResponseHelper<RMEpisode>, RMError>) in
+    func getPageEpisode(page: Int, completion: @escaping (Result<[RMEpisode], Error>) -> Void) {
+        let request = RMEpisodesRoute.getEpisodePage(page: page).urlRequestComplete
+        dataManager.getPage(request: request) { (result: Result<ResponseHelper<RMEpisode>, RMError>) in
             switch result {
             case.success(let response):
-                if let episodes = response.results as? [T] {
-                    complition(.success(episodes))
-                }
+                completion(.success(response.results))
             case.failure(let error):
-                complition(.failure(error))
+                completion(.failure(error))
             }
         }
     }
     
-    func getFilterEpisodes<T>(request: URLRequest, complition: @escaping (Result<[T], Error>) -> Void) where T : Decodable {
-        self.filterData(request: request) { (result: Result<ResponseHelper<RMEpisode>, RMError>) in
+    func getFilterEpisodes(filterParams: [RMFilterProtocol], completion: @escaping (Result<[RMEpisode], Error>) -> Void) {
+        let request = RMEpisodesRoute.filterEpisodes(filteraBy: filterParams).urlRequestComplete
+        dataManager.filterData(request: request) { (result: Result<ResponseHelper<RMEpisode>, RMError>) in
             switch result {
             case.success(let response):
-                if let episodes = response.results as? [T] {
-                    complition(.success(episodes))
-                }
+                completion(.success(response.results))
             case.failure(let error):
-                complition(.failure(error))
+                completion(.failure(error))
             }
         }
     }

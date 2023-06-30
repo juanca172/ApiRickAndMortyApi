@@ -22,48 +22,6 @@ final class EpisodeTestDataManger: XCTestCase {
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
-
-    func testExample() throws {
-        // UI tests must launch the application that they test.
-        let app = XCUIApplication()
-        app.launch()
-
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testLaunchPerformance() throws {
-        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {
-            // This measures how long it takes to launch your application.
-            measure(metrics: [XCTApplicationLaunchMetric()]) {
-                XCUIApplication().launch()
-            }
-        }
-    }
-    
-    func test_get_All_Episodes_RMDefaultDataManagerEpisode() {
-        
-        let result = RMEpisode(id: 1, name: "Pilot", air_date: "December 2, 2013", episode: "S01E01", characters: ["https://rickandmortyapi.com/api/character/1", "https://rickandmortyapi.com/api/character/2"], url: "https://rickandmortyapi.com/api/episode/1", created: "2017-11-10T12:56:33.798Z")
-        
-        let info = ResponseHelper<RMEpisode>.Info(count: 51, pages: 3, next: "https://rickandmortyapi.com/api/episode?page=2", prev: nil)
-        
-        let response = ResponseHelper(info: info, results: [result])
-        
-        networkProviderMock.dataToRecive = response
-        let expectation = XCTestExpectation(description: "test_get_All_Episodes_RMDefaultDataManagerEpisode")
-        let request = RMEpisodesRoute.getAllEpisodes.urlRequestComplete
-        
-        dataManager.getAllEpisodes(request: request) { (resultado: Result<[RMEpisode], Error>) in
-            switch resultado {
-            case.success(let episode):
-                XCTAssertEqual(episode.first?.id, result.id)
-                expectation.fulfill()
-            case.failure(_):
-                break
-                
-            }
-        }
-        wait(for: [expectation], timeout: 2.5)
-    }
     
     func test_Get_A_Single_Episode_RMDefaultdatamanager() {
         
@@ -72,8 +30,7 @@ final class EpisodeTestDataManger: XCTestCase {
         let request = RMEpisodesRoute.getASingleEpisode(episodeId: result.id).urlRequestComplete
         let expectation = expectation(description: "test_Get_A_Single_Episode_RMDefaultdatamanager")
         
-        
-        dataManager.getASingleEpisode(id: result.id, request: request) { (resultado: Result<RMEpisode, Error>) in
+        dataManager.getASingleEpisode(id: result.id) { (resultado: Result<RMEpisode, Error>) in
             switch resultado {
             case.success(let episode):
                 XCTAssertEqual(episode.id, result.id)
@@ -89,10 +46,10 @@ final class EpisodeTestDataManger: XCTestCase {
         let result = RMEpisode(id: 1, name: "Pilot", air_date: "December 2, 2013", episode: "S01E01", characters: ["https://rickandmortyapi.com/api/character/1", "https://rickandmortyapi.com/api/character/2"], url: "https://rickandmortyapi.com/api/episode/1", created: "2017-11-10T12:56:33.798Z")
         networkProviderMock.dataToRecive = [result]
         
-        let request = RMEpisodesRoute.getMultipleEpisodes(episodes: [1]).urlRequestComplete
+        let request = RMEpisodesRoute.getMultipleEpisodes(episodes: [result.id]).urlRequestComplete
         let expectation = expectation(description: "test_Get_Multiple_Episode_RMDefauldatamanager")
         
-        dataManager.getMultipleEpisodes(ids: [1], request: request) { (resultado: Result<[RMEpisode], Error>) in
+        dataManager.getMultipleEpisodes(ids: [result.id]) { (resultado: Result<[RMEpisode], Error>) in
             switch resultado {
             case.success(let episodes):
                 XCTAssertEqual(episodes.first?.id, result.id)
@@ -102,6 +59,7 @@ final class EpisodeTestDataManger: XCTestCase {
             }
         }
         wait(for: [expectation], timeout: 2.0)
+
     }
     
     func test_Get_Page_Episode_RMDefaultdatamanager() {
@@ -110,13 +68,13 @@ final class EpisodeTestDataManger: XCTestCase {
         
         let info = ResponseHelper<RMEpisode>.Info(count: 51, pages: 1, next: "https://rickandmortyapi.com/api/episode?page=2", prev: nil)
         
-        let response = ResponseHelper(info: info, results: [result])
+        let response = ResponseHelper<RMEpisode>(info: info, results: [result])
         
         networkProviderMock.dataToRecive = response
         let request = RMEpisodesRoute.getEpisodePage(page: info.pages).urlRequestComplete
         let expectation = expectation(description: "test_Get_Page_Episode_RMDefaultdatamanager")
         
-        dataManager.getPageEpisode(page: info.pages, request: request) { (resultado: Result<[RMEpisode], Error>) in
+        dataManager.getPageEpisode(page: info.pages) { (resultado: Result<[RMEpisode], Error>) in
             switch resultado {
             case.success(let episodes):
                 XCTAssertEqual(episodes.first?.id, result.id)
@@ -142,7 +100,7 @@ final class EpisodeTestDataManger: XCTestCase {
         
         let expectation = expectation(description: "test_Get_Filter_Episode_RMDefaultdamanager")
         
-        dataManager.getFilterEpisodes(request: request) { (resultado: Result<[RMEpisode], Error>) in
+        dataManager.getFilterEpisodes(filterParams: [name]) { (resultado: Result<[RMEpisode], Error>) in
             switch resultado {
             case.success(let episodes):
                 XCTAssertEqual(episodes.first?.id, result.id)
@@ -152,7 +110,6 @@ final class EpisodeTestDataManger: XCTestCase {
             }
         }
         wait(for: [expectation], timeout: 2.0)
-        
     }
 }
 

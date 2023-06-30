@@ -21,8 +21,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }()
     
     lazy var managedObjectContext = persistentContainer.viewContext
-    
     var window: UIWindow?
+    let tabBar: Router = RMDefaultRouter()
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -40,8 +40,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         window = UIWindow(frame: UIScreen.main.bounds)
-        let home = TabBarController()
-        self.window?.rootViewController = home
+        self.window?.rootViewController = tabBar.getRootViewController()
         window?.makeKeyAndVisible()
         window?.windowScene = windowScene
  

@@ -33,7 +33,7 @@ class EpisodesViewModel: EpisodeViewModelProtocol {
         
         if !isChargin {
             let request = RMEpisodesRoute.getEpisodePage(page: newPage).urlRequestComplete
-            dataManager.getPageEpisode(page: page, request: request) { [weak self] (result:Result<[RMEpisode], Error>) in
+            dataManager.getPageEpisode(page: page) {  [weak self] (result:Result<[RMEpisode], Error>) in
                 guard let weakSelf = self else {
                     return
                 }
