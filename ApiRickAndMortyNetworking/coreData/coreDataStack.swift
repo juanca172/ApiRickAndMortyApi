@@ -14,7 +14,7 @@ class CoreDataStack {
     lazy var managedContex = container.viewContext
     
     init() {
-        container = NSPersistentContainer(name: "Character")
+        container = NSPersistentContainer(name: "RickAndMortyStorage")
         setUpCoreData()
         saveContext()
     }

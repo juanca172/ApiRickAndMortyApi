@@ -11,6 +11,7 @@ protocol CoreDataManagerProtocol {
     func saveData(obtained: RMCharacter)
 }
 class CoreDataManager: CoreDataManagerProtocol {
+    
     func saveData(obtained: RMCharacter) {
         let characterManage = Character(context: AppDelegate.sharedAppDelegate.coreDataStack.managedContex)
         characterManage.characterName = obtained.name
@@ -19,7 +20,7 @@ class CoreDataManager: CoreDataManagerProtocol {
         characterManage.characterType = obtained.type
         characterManage.characterImage = obtained.image
         do {
-            try AppDelegate.sharedAppDelegate.coreDataStack.saveContext()
+            try AppDelegate.sharedAppDelegate.coreDataStack.managedContex.save()
             print("Works!")
         } catch {
             fatalError(error.localizedDescription)

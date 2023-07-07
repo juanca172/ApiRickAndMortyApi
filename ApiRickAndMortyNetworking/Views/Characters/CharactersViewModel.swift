@@ -19,7 +19,6 @@ protocol CharacterViewModelProtocol: AnyObject {
     func getId(indexPath: IndexPath) -> Int
     var reloadData: (() -> ())? { get set }
     func vaciarFiltro()
-    func getCharacterForDetail(id: Int)
     var characterById: (( _ characterUI: RMCharacter) -> ())? {get set}
 }
 
@@ -77,28 +76,7 @@ final class CharactersViewModel: CharacterViewModelProtocol {
             }
         }
     }
-    
-    func getOneCharacter(for given: Int) {
-        
-        let identifier = given > 0 ? given : 1
 
-        dataManager.getOneCharacterById(id: identifier) { [weak self] (result: Result<RMCharacter, Error>) in
-            guard let weakSelf = self else {
-                return
-            }
-            switch result {
-            case.success(let character):
-                weakSelf.characterObtained = character
-                weakSelf.characterById?(character)
-                
-                print(character.name)
-            case.failure(let error):
-                print(error)
-            
-            }
-        }
-    }
-    
     
 }
 
@@ -162,10 +140,5 @@ extension CharactersViewModel {
         } else {
             return characterSections[indexPath.section][indexPath.row].id
         }
-    }
-    
-    func getCharacterForDetail(id: Int) {
-        getOneCharacter(for: id)
-        print("Character")
     }
 }

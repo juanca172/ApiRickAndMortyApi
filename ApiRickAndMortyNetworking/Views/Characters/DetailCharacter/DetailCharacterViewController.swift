@@ -16,18 +16,17 @@ final class DetailCharacterViewController: UIViewController {
     @IBOutlet private weak var statusLabel: UILabel!
     @IBOutlet private weak var nameLabel: UILabel!
     @IBOutlet private weak var CharacterImage: UIImageView!
-    var managedObjectContext: NSManagedObjectContext!
-    private var viewModel: CharacterViewModelProtocol?
+    private var viewModel: DetailViewModelProtocol?
     var idToSearch: Int!
     private var characterGet: RMCharacter?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel = CharactersViewModel()
+        viewModel = DetailViewModel()
         searchCharacter()
         viewModel?.characterById = { [weak self] (update) in
-            self?.characterGet = update
             DispatchQueue.main.async {
+                self?.characterGet = update
                 self?.updateUI(to: update)
             }
         }
@@ -50,20 +49,7 @@ final class DetailCharacterViewController: UIViewController {
     
     //MARK: CoreData
     @IBAction func saveData() {
-
-        let characterToSave = Character(context: managedObjectContext)
-        characterToSave.characterName = nameLabel.text
-        characterToSave.characterSpecie = speciesLabel.text
-        characterToSave.characterStatus = statusLabel.text
-        characterToSave.characterType = typeLabel.text
-        characterToSave.characterImage = characterGet?.image
-        
-        do {
-            try managedObjectContext.save()
-            dismiss(animated: true)
-        } catch {
-            fatalError(error.localizedDescription)
-        }
+        viewModel?.saveContext()
     }
     
     func updateUI(to: RMCharacter) {

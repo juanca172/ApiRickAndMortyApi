@@ -83,7 +83,6 @@ extension CharactersViewController: UITableViewDataSource {
         tableView.deselectRow(at: indexPath, animated: true)
         detailController.modalPresentationStyle = .overFullScreen
         detailController.idToSearch = self.viewModel?.getId(indexPath: indexPath)
-        detailController.managedObjectContext = self.managedObjectContext
         present(detailController , animated: true)
         
     }
