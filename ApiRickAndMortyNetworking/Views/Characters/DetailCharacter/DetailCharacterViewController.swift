@@ -26,6 +26,7 @@ final class DetailCharacterViewController: UIViewController {
         viewModel = CharactersViewModel()
         searchCharacter()
         viewModel?.characterById = { [weak self] (update) in
+            self?.characterGet = update
             DispatchQueue.main.async {
                 self?.updateUI(to: update)
             }

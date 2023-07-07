@@ -22,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     lazy var managedObjectContext = persistentContainer.viewContext
     var window: UIWindow?
-    let tabBar: Router = RMDefaultRouter()
+    let router: Router = RMDefaultRouter()
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -40,7 +40,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         window = UIWindow(frame: UIScreen.main.bounds)
-        self.window?.rootViewController = tabBar.getRootViewController()
+        self.window?.rootViewController = router.getRootViewController()
         window?.makeKeyAndVisible()
         window?.windowScene = windowScene
  
@@ -73,25 +73,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
-        saveContext()
+        AppDelegate.sharedAppDelegate.coreDataStack.saveContext()
     }
     
-    // MARK: - Core Data Saving support
 
-    func saveContext() {
-        let context = persistentContainer.viewContext
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-            }
-        }
-    }
-
+    
 
 }
 

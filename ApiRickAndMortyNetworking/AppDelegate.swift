@@ -11,7 +11,13 @@ import CoreData
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
+    lazy var coreDataStack: CoreDataStack = CoreDataStack()
+    static let sharedAppDelegate: AppDelegate = {
+        guard let delegate = UIApplication.shared.delegate as? AppDelegate else {
+            fatalError("Unexpected app delegate type, did it change? ,\(String(describing: UIApplication.shared.delegate))")
+        }
+        return delegate
+    }()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -32,29 +38,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
 
-    lazy var persistentContainer: NSPersistentContainer = {
-      let container = NSPersistentContainer(name: "RickAndMortyStorage")
-      container.loadPersistentStores {_, error in
-        if let error = error {
-          fatalError("Could not load data store: \(error)")
-        }
-    }
-      return container
-    }()
-    
-    
-    func saveContext() {
-        let context = persistentContainer.viewContext
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-            }
-        }
-    }
 }
 
