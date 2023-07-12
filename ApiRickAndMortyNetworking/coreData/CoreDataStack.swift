@@ -8,15 +8,23 @@
 import Foundation
 import CoreData
 
-class CoreDataStack {
+protocol CoreDataStackProtocol {
     
+    var managedContext: NSManagedObjectContext { get }
+    func save()
+    
+}
+ 
+class CoreDataStack: CoreDataStackProtocol {
+    
+    static var sharedCoreData: CoreDataStackProtocol = CoreDataStack()
     private let container: NSPersistentContainer!
-    lazy var managedContex = container.viewContext
+    lazy var managedContext = container.viewContext
     
     init() {
         container = NSPersistentContainer(name: "RickAndMortyStorage")
         setUpCoreData()
-        saveContext()
+        save()
     }
     
     
@@ -30,15 +38,17 @@ class CoreDataStack {
         }
     }
     
+    func save() {
+        saveContext()
+    }
+    
+    
     // MARK: - Core Data Saving support
     func saveContext() {
-        let context = container.viewContext
-        if context.hasChanges {
+        if managedContext.hasChanges {
             do {
-                try context.save()
+                try managedContext.save()
             } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
                 let nserror = error as NSError
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             }

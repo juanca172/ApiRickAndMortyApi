@@ -22,7 +22,7 @@ class DetailViewModel: DetailViewModelProtocol {
     var characterById: ((RMCharacter) -> ())?
 
     
-    init(coreDataManager: CoreDataManagerProtocol = CoreDataManager(), dataManager: RMCharacterDatamanager = RMDefaultCharacterDataManager(networkProvider: NetworkProvider())) {
+    init(coreDataManager: CoreDataManagerProtocol = CoreDataManager(coreData: CoreDataStack()), dataManager: RMCharacterDatamanager = RMDefaultCharacterDataManager(networkProvider: NetworkProvider())) {
         self.coreDataManager = coreDataManager
         self.dataManager = dataManager
     }

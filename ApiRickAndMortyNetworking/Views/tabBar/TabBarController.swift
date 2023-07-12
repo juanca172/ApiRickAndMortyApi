@@ -41,10 +41,14 @@ class TabBarController: UITabBarController {
         let episodesVC = EpisodesViewController()
         let episodesTabBarItem = UITabBarItem(title: NSLocalizedString("Episodes", comment: ""), image: UIImage(systemName: "tv"), tag: 2)
         
+        let favoritesVC = FavoritesViewController()
+        let favoritesTabBarItem = UITabBarItem(title: NSLocalizedString("Episodes", comment: ""), image: UIImage(systemName: "heart.fill"), tag: 3)
+        
         let viewControllers = [
             createNavigationController(for: charactersVC, item: charactersTabBarItem),
             createNavigationController(for: locationsVC, item: locationsTabBarItem),
-            createNavigationController(for: episodesVC, item: episodesTabBarItem)
+            createNavigationController(for: episodesVC, item: episodesTabBarItem),
+            createNavigationController(for: favoritesVC, item: favoritesTabBarItem)
         ]
         
         setViewControllers(viewControllers, animated: true)

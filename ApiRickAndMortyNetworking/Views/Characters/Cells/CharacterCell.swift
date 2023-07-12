@@ -36,6 +36,10 @@ class CharacterCell: UITableViewCell, RMTableViewCellProtocol {
             guard var viewModel = viewModel as? CharacterViewCellViewModel else {
                 return
             }
+        self.layer.borderWidth = 1
+        self.layer.cornerRadius = 10
+        self.backgroundColor = .purple
+        self.layer.frame = .init(x: 0, y: 0, width: 200, height: 200)
             name.text = viewModel.name
             specie.text = viewModel.specie
             type.text = viewModel.type
