@@ -39,7 +39,6 @@ final class LocationViewModel {
                 case .success(let locations):
                     weakSelf.isCharging = true
                     weakSelf.locationSections.append(locations)
-                    print(locations)
                     weakSelf.reloadData?()
                 case .failure(let error):
                     print(error.localizedDescription)
