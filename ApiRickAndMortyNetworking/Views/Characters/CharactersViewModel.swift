@@ -16,34 +16,41 @@ protocol CharacterViewModelProtocol: AnyObject {
     func getCellViewModel(indexPath: IndexPath) -> RMTableViewCellModelProtocol
     func updateData()
     func updateFilterData(search name: String)
-    func detailCharacter() -> [[RMCharacter]]
+    func getId(indexPath: IndexPath) -> Int
     var reloadData: (() -> ())? { get set }
     func vaciarFiltro()
+    var characterById: (( _ characterUI: RMCharacter) -> ())? {get set}
 }
 
 
-final class CharactersViewModel {
+final class CharactersViewModel: CharacterViewModelProtocol {
     
+    var characterById: ((RMCharacter) -> ())?
+        
     private var characterSections : [[RMCharacter]] = []
     private var filteredData : [[RMCharacter]] = []
     private var page = 1
     private var isPaginating = false
-    private let dataManager: RMCharacterDataManagerProtocol
+    private let dataManager: RMCharacterDatamanager
+    private var characterObtained: RMCharacter?
     
     var reloadData: (() -> ())?
     
-    init(dataManager: RMCharacterDataManagerProtocol = RMDefaultCharacterDataManager()) {
+    init(dataManager: RMCharacterDatamanager = RMDefaultCharacterDataManager(networkProvider: NetworkProvider())) {
         self.dataManager = dataManager
     }
     
     func loadData(page: Int) {
         if isPaginating == false {
-            dataManager.getCharactersByPage(pageNumber: page) { [weak self] (result: Result<[RMCharacter], Error>) in
+            dataManager.getCharacterByPage(pageNumber: page) {[weak self] (result: Result<[RMCharacter], Error>) in
+                guard let weakSelf = self else {
+                    return
+                }
                 switch result {
                 case .success(let page):
-                    self?.isPaginating = true
-                    self?.characterSections.append(page)
-                    self?.reloadData?()
+                    weakSelf.isPaginating = true
+                    weakSelf.characterSections.append(page)
+                    weakSelf.reloadData?()
                 case .failure(let error):
                     print(error)
                 }
@@ -51,32 +58,30 @@ final class CharactersViewModel {
         }
     }
     
-    
     func filterCharacter(for name: String) {
         filteredData  = []
         let filter = RMNameCharacter(name: name)
-            dataManager.filterParams(filters: [filter]) { [weak self] (result:Result<[RMCharacter],Error>) in
-                guard let weakSelf = self else {
-                    return
-                }
-                switch result {
-                case .success(let characters):
-                    weakSelf.filteredData.append(characters)
-                    weakSelf.reloadData?()
-                    print(weakSelf.filteredData.count)
-
-                case.failure(let error):
-                    print(error)
-                }
+        dataManager.filterParams(filter: [filter]) {[weak self] (result: Result<[RMCharacter], Error>) in
+            guard let weakSelf = self else {
+                return
             }
+            switch result {
+            case .success(let characters):
+                weakSelf.filteredData.append(characters)
+                weakSelf.reloadData?()
+                print(weakSelf.filteredData.count)
+
+            case.failure(let error):
+                print(error)
+            }
+        }
     }
-    
-    
+
     
 }
 
 //MARK: Conformacion protocolos
-extension CharactersViewModel: CharacterViewModelProtocol {
+extension CharactersViewModel {
     
     func vaciarFiltro() {
         self.filteredData = []
@@ -129,11 +134,11 @@ extension CharactersViewModel: CharacterViewModelProtocol {
         }
     }
     
-    func detailCharacter() -> [[RMCharacter]] {
+    func getId(indexPath: IndexPath) -> Int {
         if filteredData.count != 0 {
-            return filteredData
+            return filteredData[indexPath.section][indexPath.row].id
         } else {
-            return characterSections
+            return characterSections[indexPath.section][indexPath.row].id
         }
     }
 }

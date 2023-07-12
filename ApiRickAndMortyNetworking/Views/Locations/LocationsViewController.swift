@@ -25,6 +25,7 @@ class LocationsViewController: UIViewController, UIScrollViewDelegate {
         tableView.delegate = self
         tableView.dataSource = self
     }
+    
     private func configureViewModel() {
         viewModel = LocationViewModel()
         viewModel?.start()
@@ -66,11 +67,13 @@ extension LocationsViewController: UITableViewDelegate, UITableViewDataSource {
     
 }
 extension LocationsViewController {
+    
+    
         func scrollViewDidScroll(_ scrollView: UIScrollView) {
             let pos = scrollView.contentOffset.y
             if pos > (tableView.contentSize.height - 100) - scrollView.frame.size.height {
                 tableView.reloadData()
-                viewModel?.updateData()
+                //viewModel?.updateData()
             }
            
         }

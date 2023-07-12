@@ -7,20 +7,17 @@
 
 import Foundation
 import UIKit
-protocol UrlCompleteCharacter {
-    var finalUrl: String {get}
-    var URLRequestComplete : URLRequest {get}
-}
-enum RMCharacterRoute  : UrlCompleteCharacter {
+
+enum RMCharacterRoute  : URLComplete {
     static var dominio = "https://rickandmortyapi.com/api"
     case getAllCharacter
     case getOneCharacter(id: Int)
     case getMultipleCharacters(ids:[Int])
     case getPageCharacter(pageNumber : Int)
-    case filterCharacter(filterProtocol: [RMCharacterFilterProtocol])
+    case filterCharacter(filterProtocol: [RMFilterProtocol])
 }
 extension RMCharacterRoute {
-    var finalUrl: String {
+    var finalURL: String {
         var components = URLComponents()
         switch self {
         case .getAllCharacter:
@@ -47,7 +44,7 @@ extension RMCharacterRoute {
             return components.string ?? ""
             
         case .filterCharacter(filterProtocol: let arrayFilter):
-            let mapingAndQueryng = arrayFilter.map({URLQueryItem(name: $0.value.0.lowercased(), value: $0.value.1.lowercased())})
+            let mapingAndQueryng = arrayFilter.map({URLQueryItem(name: $0.filterTuple.0.lowercased(), value: $0.filterTuple.1.lowercased())})
             components.queryItems = mapingAndQueryng
             components.path = "/character/"
             return components.string ?? ""
@@ -56,8 +53,8 @@ extension RMCharacterRoute {
 }
 
 extension RMCharacterRoute {
-    var URLRequestComplete: URLRequest {
-        let buildingUrl: String = Self.dominio + finalUrl
+    var urlRequestComplete: URLRequest {
+        let buildingUrl: String = Self.dominio + finalURL
         if let urlCompound = URL(string: buildingUrl) {
             return URLRequest.init(url:urlCompound)
         }
@@ -65,14 +62,12 @@ extension RMCharacterRoute {
 
     }
 }
-protocol RMCharacterFilterProtocol {
-    var value: (String, String) {get}
-}
+
 struct RMNameCharacter {
     let name: String
 }
-extension RMNameCharacter : RMCharacterFilterProtocol {
-    var value: (String, String) {
+extension RMNameCharacter : RMFilterProtocol {
+    var filterTuple: (String, String) {
         return ("name", name)
     }
 }
@@ -80,8 +75,8 @@ extension RMNameCharacter : RMCharacterFilterProtocol {
 struct RMStatusCharacter {
     let status: RMCharacterStatus.RawValue
 }
-extension RMStatusCharacter : RMCharacterFilterProtocol{
-    var value: (String, String) {
+extension RMStatusCharacter : RMFilterProtocol{
+    var filterTuple: (String, String) {
         return ("status", status)
     }
 }
@@ -89,16 +84,16 @@ extension RMStatusCharacter : RMCharacterFilterProtocol{
 struct RMEspecieCharacter {
     let specie: String
 }
-extension RMEspecieCharacter : RMCharacterFilterProtocol {
-    var value: (String, String) {
+extension RMEspecieCharacter : RMFilterProtocol {
+    var filterTuple: (String, String) {
         return ("specie", specie)
     }
 }
 struct RMGeneroCharacter {
     let genre: RMCharacterGender.RawValue
 }
-extension RMGeneroCharacter : RMCharacterFilterProtocol {
-    var value: (String, String) {
+extension RMGeneroCharacter : RMFilterProtocol {
+    var filterTuple: (String, String) {
         return ("genre", genre)
     }
 }

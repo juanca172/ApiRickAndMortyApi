@@ -7,22 +7,18 @@
 
 import Foundation
 
-protocol URLCompleteEpisodes {
-    var finalURL: String {get}
-    var urlRequestComplete: URLRequest {get}
-}
-protocol RMFilterEpisodesProtocol {
-    var filterTupe : (String, String) {get}
-}
-enum RMEpisodesRoute: URLCompleteEpisodes {
+
+enum RMEpisodesRoute: URLComplete {
     static let domain = "https://rickandmortyapi.com/api"
     case getAllEpisodes
+    case getEpisodePage(page: Int)
     case getASingleEpisode(episodeId: Int)
     case getMultipleEpisodes(episodes: [Int])
-    case filterEpisodes(filteraBy: [RMFilterEpisodesProtocol])
+    case filterEpisodes(filteraBy: [RMFilterProtocol])
 }
 extension RMEpisodesRoute {
     var finalURL: String {
+        
         var compound = URLComponents()
         switch self {
         case .getAllEpisodes:
@@ -38,10 +34,18 @@ extension RMEpisodesRoute {
             compound.path = "/episode/\(joining)"
             return compound.string ?? ""
         case .filterEpisodes(let filterBy):
-            let mapping = filterBy.map({URLQueryItem(name: $0.filterTupe.0.lowercased() , value: $0.filterTupe.1.lowercased())})
+            let mapping = filterBy.map({URLQueryItem(name: $0.filterTuple.0.lowercased() , value: $0.filterTuple.1.lowercased())})
             compound.queryItems = mapping
             compound.path = "/episode/"
             return compound.string ?? ""
+        case.getEpisodePage(page: let page):
+            
+            assert(page > 0, "La pagina \(page) no existe")
+            compound.path = "/episode"
+            let queryToken = URLQueryItem(name: "page", value: "\(page)")
+            compound.queryItems = [queryToken]
+            return compound.string ?? ""
+            
         }
     }
 }
@@ -56,16 +60,16 @@ extension RMEpisodesRoute {
 struct RMNameRouteEpisode {
     var name: String
 }
-extension RMNameRouteEpisode : RMFilterEpisodesProtocol {
-    var filterTupe: (String, String) {
+extension RMNameRouteEpisode : RMFilterProtocol {
+    var filterTuple: (String, String) {
         return ("name", name)
     }
 }
 struct RMEpisodeFilter {
     var episode: String
 }
-extension RMEpisodeFilter : RMFilterEpisodesProtocol {
-    var filterTupe: (String, String) {
+extension RMEpisodeFilter : RMFilterProtocol {
+    var filterTuple: (String, String) {
         return ("episode", episode)
     }
 }

@@ -46,5 +46,17 @@ class TestEpisodeRickAndMorty: XCTestCase {
         XCTAssertEqual(expectedURL, filtar.url?.absoluteString)
         
     }
+    func test_GetPageEpisode() {
+        //Given
+        let page = 1
+        let routeToCompare = RMEpisodesRoute.getEpisodePage(page: page).urlRequestComplete
+        
+        //When
+        let expectedRoute = "https://rickandmortyapi.com/api/episode?page=1"
+        
+        //then
+        
+        XCTAssertEqual(expectedRoute, routeToCompare.url?.absoluteURL.absoluteString)
+    }
 
 }

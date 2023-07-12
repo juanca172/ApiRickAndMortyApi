@@ -8,27 +8,38 @@
 import UIKit
 import CoreData
 
-class DetailCharacterViewController: UIViewController {
-
-    @IBOutlet weak var pop_upView: UIView!
-    @IBOutlet weak var speciesLabel: UILabel!
-    @IBOutlet weak var typeLabel: UILabel!
-    @IBOutlet weak var statusLabel: UILabel!
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var CharacterImage: UIImageView!
-    var managedObjectContext: NSManagedObjectContext!
-
+final class DetailCharacterViewController: UIViewController {
+  
     
-    var character: RMCharacter!
+    @IBOutlet private weak var speciesLabel: UILabel!
+    @IBOutlet private weak var typeLabel: UILabel!
+    @IBOutlet private weak var statusLabel: UILabel!
+    @IBOutlet private weak var nameLabel: UILabel!
+    @IBOutlet private weak var CharacterImage: UIImageView!
+    private var viewModel: DetailViewModelProtocol?
+    var idToSearch: Int!
+    private var characterGet: RMCharacter?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if character != nil {
-            updateUI()
-            
+        viewModel = DetailViewModel()
+        searchCharacter()
+        viewModel?.characterById = { [weak self] (update) in
+            DispatchQueue.main.async {
+                self?.characterGet = update
+                self?.updateUI(to: update)
+            }
         }
-
         // Do any additional setup after loading the view.
+    }
+    
+    deinit {
+        print("Murio")
+    }
+    
+    
+    func searchCharacter() {
+        viewModel?.getCharacterForDetail(id: idToSearch)
     }
     
     // MARK: - Actions
@@ -38,27 +49,16 @@ class DetailCharacterViewController: UIViewController {
     
     //MARK: CoreData
     @IBAction func saveData() {
-        let characterToSave = Character(context: managedObjectContext)
-        characterToSave.characterName = nameLabel.text
-        characterToSave.characterSpecie = speciesLabel.text
-        characterToSave.characterStatus = statusLabel.text
-        characterToSave.characterType = typeLabel.text
-        characterToSave.characterImage = character.image
-        
-        do {
-            try managedObjectContext.save()
-            dismiss(animated: true)
-        } catch {
-            fatalError(error.localizedDescription)
-        }
+        viewModel?.saveContext()
     }
     
-    func updateUI() {
-        nameLabel.text = character.name
-        statusLabel.text = character.status.rawValue
-        typeLabel.text = character.type
-        speciesLabel.text = character.species
-        guard let url = URL(string: character.image) else {
+    func updateUI(to: RMCharacter) {
+        characterGet = to
+        nameLabel.text = to.name
+        statusLabel.text = to.status.rawValue
+        typeLabel.text = to.type
+        speciesLabel.text = to.species
+        guard let url = URL(string: to.image) else {
             return
         }
         
@@ -74,16 +74,7 @@ class DetailCharacterViewController: UIViewController {
             }
 
         }
+        
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

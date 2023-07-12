@@ -6,20 +6,14 @@
 //
 
 import Foundation
-protocol URLCompleteLocation {
-    var finalURL: String {get}
-    var urlRequestComplete: URLRequest {get}
-}
-protocol RMFilterLocationProtocol {
-    var filterTuple : (String, String) {get}
-}
-enum RMLocationRoute : URLCompleteLocation {
+
+enum RMLocationRoute : URLComplete {
     static var dominio = "https://rickandmortyapi.com/api"
     case getAllLocations
     case getPageIndicated(page: Int)
     case getASingleLocation(id: Int)
     case getMultipleLocations(ids: [Int])
-    case filterLocation(filterProtocol: [RMFilterLocationProtocol])
+    case filterLocation(filterProtocol: [RMFilterProtocol])
 }
 extension RMLocationRoute {
     var finalURL: String {
@@ -44,7 +38,7 @@ extension RMLocationRoute {
             components.path = "/location/\(stringfinal)"
             return components.string ?? ""
         case .filterLocation(let filterProtocol):
-            let arrayOfQueryItems = filterProtocol.map({(value: RMFilterLocationProtocol) -> URLQueryItem in
+            let arrayOfQueryItems = filterProtocol.map({(value: RMFilterProtocol) -> URLQueryItem in
                 return URLQueryItem(name: value.filterTuple.0.lowercased(), value: value.filterTuple.1.lowercased())
             })
             components.queryItems = arrayOfQueryItems
@@ -66,7 +60,8 @@ extension RMLocationRoute {
 struct RMNameLocation {
     let name: String
 }
-extension RMNameLocation : RMFilterLocationProtocol {
+extension RMNameLocation : RMFilterProtocol {
+    
     var filterTuple: (String, String) {
         return ("name", name)
     }
@@ -74,7 +69,7 @@ extension RMNameLocation : RMFilterLocationProtocol {
 struct RMTypeLocation {
     let type: String
 }
-extension RMTypeLocation : RMFilterLocationProtocol {
+extension RMTypeLocation : RMFilterProtocol {
     var filterTuple: (String, String) {
         return ("type", type)
     }
@@ -82,7 +77,7 @@ extension RMTypeLocation : RMFilterLocationProtocol {
 struct RMDimensionLocation {
     let dimension: String
 }
-extension RMDimensionLocation : RMFilterLocationProtocol {
+extension RMDimensionLocation : RMFilterProtocol {
     var filterTuple: (String, String) {
         return ("dimension", dimension)
     }

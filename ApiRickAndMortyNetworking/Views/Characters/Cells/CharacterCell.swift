@@ -50,7 +50,7 @@ class CharacterCell: UITableViewCell, RMTableViewCellProtocol {
             name.text = ""
             specie.text = ""
             type.text = ""
-            imageCharacter.image = UIImage(named: "rectangle")
+            imageCharacter.image = UIImage(systemName: "square")
         }
     
 }

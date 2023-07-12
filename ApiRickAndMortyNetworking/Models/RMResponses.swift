@@ -7,29 +7,18 @@
 
 import Foundation
 
-struct Info: Codable {
-    var count: Int
-    var pages: Int
-    var next: String?
-    var prev: String?
-}
 
-struct CharacterResponseHelper: Decodable {
-    var info: Info
-    var results: [RMCharacter]
-    init(results: [RMCharacter], info: Info) {
-        self.info = info 
-        self.results = results
+
+struct ResponseHelper <RMType: Decodable>: Decodable {
+    
+    struct Info: Codable {
+        var count: Int
+        var pages: Int
+        var next: String?
+        var prev: String?
     }
-}
-
-struct LocationResponseHelper: Decodable {
+    
     var info: Info
-    var results: [RMLocation]
-}
-
-struct EpisodeResponseHelper: Decodable {
-    var info: Info
-    var results: [RMEpisode]
+    var results: [RMType]
 }
 

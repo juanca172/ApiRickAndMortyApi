@@ -23,7 +23,7 @@ class ApiRickAndMortyNetworkingTests: XCTestCase {
         let expectedURLString = "https://rickandmortyapi.com/api/character/\(expectedValue)"
         let request = RMCharacterRoute.getOneCharacter(id: expectedValue)
         //When
-        let urlRequest = request.URLRequestComplete
+        let urlRequest = request.urlRequestComplete
         //Then
         XCTAssertEqual(expectedURLString, urlRequest.url?.absoluteString)
     }
@@ -33,7 +33,7 @@ class ApiRickAndMortyNetworkingTests: XCTestCase {
         let expectedURLString = "https://rickandmortyapi.com/api/\(expectedValue)"
         let request = RMCharacterRoute.getAllCharacter
         //When
-        let urlRequest = request.URLRequestComplete
+        let urlRequest = request.urlRequestComplete
         //Then
         XCTAssertEqual(expectedURLString, urlRequest.url?.absoluteString)
     }
@@ -43,7 +43,7 @@ class ApiRickAndMortyNetworkingTests: XCTestCase {
         let expectedURLString = "https://rickandmortyapi.com/api/character/?page=\(expectedValue)"
         let request = RMCharacterRoute.getPageCharacter(pageNumber: expectedValue)
         //When
-        let urlRequest = request.URLRequestComplete
+        let urlRequest = request.urlRequestComplete
         //Then
         XCTAssertEqual(expectedURLString, urlRequest.url?.absoluteString)
     }
@@ -53,7 +53,7 @@ class ApiRickAndMortyNetworkingTests: XCTestCase {
         let expectedURLString = "https://rickandmortyapi.com/api/character/1,183"
         let request = RMCharacterRoute.getMultipleCharacters(ids: expectedValue)
         //when
-        let urlRequest = request.URLRequestComplete
+        let urlRequest = request.urlRequestComplete
         //then
         XCTAssertEqual(expectedURLString, urlRequest.url?.absoluteString)
     }
@@ -68,7 +68,7 @@ class ApiRickAndMortyNetworkingTests: XCTestCase {
         let genreRM = RMGeneroCharacter(genre: RMCharacterGender.Male.rawValue)
         let request = RMCharacterRoute.filterCharacter(filterProtocol: [name, statusRM,genreRM])
         //when
-        let urlRequest = request.URLRequestComplete
+        let urlRequest = request.urlRequestComplete
         //then
         XCTAssertEqual(expectedURLString, urlRequest.url?.absoluteString)
     }

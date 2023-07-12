@@ -8,9 +8,8 @@
 import Foundation
 
 protocol RMLocationDataManagerProtocol {
-    func getAllLocations (complition: @escaping (Result<[RMLocation], Error>) -> Void)
-    func getASingleLocation(id: Int, complition: @escaping (Result <RMLocation, Error>) -> Void)
-    func getMultipleLocations (ids: [Int], complition: @escaping (Result<[RMLocation], Error>) -> Void)
-    func getPageLocation (page: Int, complition: @escaping (Result<[RMLocation], Error>) -> Void)
-    func getFilterLocations (filters: [RMFilterLocationProtocol], complition: @escaping (Result <[RMLocation], Error>) -> Void)
+    func getASingleLocation(id: Int,completion: @escaping (Result <RMLocation, Error>) -> Void)
+    func getMultipleLocations(ids: [Int], completion: @escaping (Result<[RMLocation], Error>) -> Void)
+    func getPageLocation (page: Int ,completion: @escaping (Result<[RMLocation], Error>) -> Void)
+    func getFilterLocations(filterParams: [RMFilterProtocol],completion: @escaping (Result <[RMLocation], Error>) -> Void)
 }

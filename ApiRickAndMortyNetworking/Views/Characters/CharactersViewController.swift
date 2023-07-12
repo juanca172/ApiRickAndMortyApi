@@ -8,6 +8,7 @@
 import UIKit
 import CoreData
 
+
 class CharactersViewController: UIViewController, UIScrollViewDelegate {
     
     @IBOutlet var tableView: UITableView!
@@ -78,16 +79,16 @@ extension CharactersViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let detailController = DetailCharacterViewController()
         tableView.deselectRow(at: indexPath, animated: true)
-        performSegue(withIdentifier: "showDetail", sender: indexPath)
+        detailController.modalPresentationStyle = .overFullScreen
+        detailController.idToSearch = self.viewModel?.getId(indexPath: indexPath)
+        present(detailController , animated: true)
+        
     }
     
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        if viewModel?.detailCharacter() != nil {
-            return indexPath
-        } else {
-            return nil
-        }
+        return indexPath
     }
     
 }
@@ -103,22 +104,6 @@ extension CharactersViewController: UITableViewDelegate {
             }
            
         }
-    
-}
-extension CharactersViewController {
-    //MARK: -Navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showDetail" {
-            let controller = segue.destination as? DetailCharacterViewController
-            controller?.modalPresentationStyle = .overFullScreen
-            let indexpath = sender as! IndexPath
-            let arregloCharacters = viewModel?.detailCharacter()
-            let character = arregloCharacters?[indexpath.section][indexpath.row]
-            controller?.character = character
-            //Enviamos coredata
-            controller?.managedObjectContext = managedObjectContext
-        }
-    }
     
 }
 

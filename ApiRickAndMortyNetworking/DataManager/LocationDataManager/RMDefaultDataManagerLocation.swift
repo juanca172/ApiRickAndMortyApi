@@ -7,74 +7,65 @@
 
 import Foundation
 
-class RMDefaultDataManagerLocation: RMLocationDataManagerProtocol {
+struct RMDefaultDataManagerLocation {
     
-    let networkProvider: NetworkProviderProtocol
+    let dataManager: RMDataManager<RMLocation>
+    var networKProvider: NetworkProviderProtocol
     
-    init(networkProvider: NetworkProviderProtocol = NetworkProvider()) {
-        self.networkProvider = networkProvider
+    init(networKProvider: NetworkProviderProtocol) {
+        self.networKProvider = networKProvider
+        self.dataManager = RMDataManager(networKProvider: networKProvider)
     }
-    
-    func getAllLocations(complition: @escaping (Result<[RMLocation], Error>) -> Void) {
-        let request = RMLocationRoute.getAllLocations.urlRequestComplete
-        networkProvider.getData(urlRequest: request) {(result: Result <LocationResponseHelper, RMError>) in
-            switch result {
-            case.success(let locations):
-                complition(.success(locations.results))
-            case.failure(let error) :
-                complition(.failure(error))
-            }
-        }
-    }
-    
-    func getASingleLocation(id: Int, complition: @escaping (Result<RMLocation, Error>) -> Void) {
+}
+
+extension RMDefaultDataManagerLocation: RMLocationDataManagerProtocol {
+ 
+    func getASingleLocation(id: Int, completion: @escaping (Result<RMLocation, Error>) -> Void) {
         let request = RMLocationRoute.getASingleLocation(id: id).urlRequestComplete
-        networkProvider.getData(urlRequest: request) { (result: Result<RMLocation, RMError>) in
+        dataManager.getOne(request: request) { (result: Result<RMLocation, RMError>) in
             switch result {
             case.success(let location):
-                complition(.success(location))
+                completion(.success(location))
             case.failure(let error):
-                complition(.failure(error))
+                completion(.failure(error))
             }
         }
     }
     
-    func getMultipleLocations(ids: [Int], complition: @escaping (Result<[RMLocation], Error>) -> Void) {
+    func getMultipleLocations(ids: [Int], completion: @escaping (Result<[RMLocation], Error>) -> Void) {
         let request = RMLocationRoute.getMultipleLocations(ids: ids).urlRequestComplete
-        networkProvider.getData(urlRequest: request) { (result: Result<LocationResponseHelper, RMError>) in
+        dataManager.getMultiple(request: request) { (result: Result<[RMLocation], RMError>) in
             switch result {
             case.success(let locations):
-                complition(.success(locations.results))
+                completion(.success(locations))
             case.failure(let error):
-                complition(.failure(error))
+                completion(.failure(error))
             }
         }
     }
     
-    func getPageLocation (page: Int, complition: @escaping (Result<[RMLocation], Error>) -> Void) {
+    func getPageLocation(page: Int, completion: @escaping (Result<[RMLocation], Error>) -> Void) {
         let request = RMLocationRoute.getPageIndicated(page: page).urlRequestComplete
-        print(request)
-        networkProvider.getData(urlRequest: request) { (result:Result<LocationResponseHelper, RMError>) in
+        dataManager.getPage(request: request) { (result: Result<ResponseHelper<RMLocation>, RMError>) in
             switch result {
             case.success(let locations):
-                complition(.success(locations.results))
+                completion(.success(locations.results))
             case.failure(let error):
-                complition(.failure(error))
+                completion(.failure(error))
             }
         }
     }
-
-
-    func getFilterLocations(filters: [RMFilterLocationProtocol], complition: @escaping (Result<[RMLocation], Error>) -> Void) {
-        let request = RMLocationRoute.filterLocation(filterProtocol: filters).urlRequestComplete
-        networkProvider.getData(urlRequest: request) { (result: Result<LocationResponseHelper, RMError>) in
+    
+    func getFilterLocations(filterParams: [RMFilterProtocol], completion: @escaping (Result<[RMLocation], Error>) -> Void) {
+        let request = RMLocationRoute.filterLocation(filterProtocol: filterParams).urlRequestComplete
+        dataManager.filterData(request: request) { (result: Result<ResponseHelper<RMLocation>, RMError>) in
             switch result {
             case.success(let locations):
-                complition(.success(locations.results))
+                completion(.success(locations.results))
             case.failure(let error):
-                complition(.failure(error))
+                completion(.failure(error))
             }
-         }
+        }
     }
     
     
